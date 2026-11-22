@@ -115,6 +115,9 @@
                     <a href="#directory-section" class="px-3 py-1.5 rounded bg-charcoal hover:bg-acid hover:text-noir transition-colors border border-borderMuted whitespace-nowrap">
                         <i class="fa-solid fa-store mr-1 text-amber-400"></i> Shop Spots
                     </a>
+                    <a href="#disclaimer-section" class="px-3 py-1.5 rounded bg-charcoal hover:bg-acid hover:text-noir transition-colors border border-borderMuted whitespace-nowrap">
+                        <i class="fa-solid fa-shield-halved mr-1 text-stone-400"></i> Legal
+                    </a>
                 </nav>
             </div>
         </div>
@@ -509,6 +512,49 @@
         </div>
     </section>
 
+    <!-- SECTION 6: LEGAL & EDITORIAL DISCLAIMER -->
+    <section id="disclaimer-section" class="py-12 border-b border-borderMuted bg-charcoal noise-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 font-mono text-xs text-stone-400">
+            <div class="bg-noir p-6 sm:p-8 rounded-2xl border border-borderMuted space-y-4">
+                <div class="flex items-center space-x-2 text-acid font-bold text-sm uppercase tracking-wider">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <span>Legal & Editorial Disclaimer</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-[11px] leading-relaxed text-stone-300 pt-2 border-t border-borderMuted/60">
+                    <div class="space-y-3">
+                        <div>
+                            <strong class="text-parchment font-bold block mb-1">1. Independent Curation & Non-Affiliation</strong>
+                            Fad4.com is an independent digital media laboratory and trend observation directory. Fad4.com is not affiliated, associated, authorized, endorsed by, or in any way officially connected with any listed thrift stores, vintage boutiques, apparel brands, marketplaces (including eBay, Poshmark, Depop, Grailed), or trademark holders.
+                        </div>
+                        <div>
+                            <strong class="text-parchment font-bold block mb-1">2. Valuation & Financial Estimates Disclaimer</strong>
+                            All resale price ranges, margin profit estimations, ROI figures, and trend scores produced by the Thrift Flip Estimator or "Fad or Forever?" tool are provided strictly for educational, research, and informational entertainment purposes. They do not constitute formal financial advice, certified appraisals, or guarantees of sale price. Actual market values fluctuate based on condition, sizing, rarity, and buyer demand.
+                        </div>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div>
+                            <strong class="text-parchment font-bold block mb-1">3. Authentication & Garment Safety</strong>
+                            Guides on single-stitching, tag decoding, and fabric dry-rot testing are community spotter methods and do not replace professional authentication services. Users are sole responsible for verifying item condition and seller credibility before completing transactions.
+                        </div>
+                        <div>
+                            <strong class="text-parchment font-bold block mb-1">4. Nominative Fair Use & External Links</strong>
+                            All brand names, logos, trademarks, and registered trademarks referenced on Fad4.com (e.g., Carhartt, Liquid Blue, Giant, Brockum, Levi's) are property of their respective owners. Their mention serves purely for identification, descriptive, and nominative fair-use reporting. Third-party links to external shop websites or maps are provided for visitor convenience; Fad4.com does not control external content, inventory, or privacy practices.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-3 border-t border-borderMuted/40 flex items-center justify-between text-[10px] text-stone-500">
+                    <span>Fad4.com Editorial Policy Version 1.2</span>
+                    <button type="button" onclick="window.scrollTo({top: 0, behavior: 'smooth'});" class="text-stone-400 hover:text-acid underline">
+                        Back to Top <i class="fa-solid fa-arrow-up ml-1"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- FOOTER -->
     <footer class="bg-noir py-10 border-t border-borderMuted font-mono text-xs text-stone-400">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -523,6 +569,8 @@
                 </div>
 
                 <div class="flex flex-wrap items-center gap-3 text-stone-400 text-[11px]">
+                    <a href="#disclaimer-section" class="hover:text-acid transition-colors">Legal Terms</a>
+                    <span>&bull;</span>
                     <span>4 FADS</span>
                     <span>&bull;</span>
                     <span>4 ERAS</span>
@@ -534,8 +582,8 @@
             </div>
 
             <div class="mt-6 pt-4 border-t border-borderMuted/40 text-center sm:text-left text-[11px] text-stone-600 flex flex-col sm:flex-row justify-between">
-                <span>&copy; Fad4.com — Built for thrift flippers, vintage archivists & trend spotters.</span>
-                <span class="mt-1 sm:mt-0">100% Interactive & Client-Side Ready</span>
+                <span>&copy; Fad4.com — Built for thrift flippers, vintage archivists & trend spotters. All rights reserved.</span>
+                <span class="mt-1 sm:mt-0">100% Client-Side & Independent</span>
             </div>
         </div>
     </footer>
@@ -581,6 +629,11 @@
                             <option value="$$$$">$$$$ (Grail Archive)</option>
                         </select>
                     </div>
+                </div>
+                <div>
+                    <label class="block text-stone-300 font-bold mb-1">Website or Social Link (Optional)</label>
+                    <input type="url" id="modal-shop-url" placeholder="https://instagram.com/shopname or https://shopsite.com" 
+                        class="w-full bg-noir border border-borderMuted rounded p-2.5 text-parchment focus:border-acid outline-none">
                 </div>
                 <div>
                     <label class="block text-stone-300 font-bold mb-1">Specialty & Highlights</label>
@@ -742,7 +795,8 @@
                 address: 'Brooklyn (Multiple Spots), NY',
                 specialty: 'Massive racks of $10-$30 vintage coats, denim, & 90s tees.',
                 priceScale: '$$',
-                rating: '4.8'
+                rating: '4.8',
+                website: 'https://www.ltrainvintagenyc.com'
             },
             {
                 id: 's2',
@@ -751,7 +805,8 @@
                 address: 'Melrose Ave, Los Angeles, CA',
                 specialty: 'Grail-level 90s rap tees, rare sneakers, and 80s pop culture.',
                 priceScale: '$$$$',
-                rating: '4.9'
+                rating: '4.9',
+                website: 'https://roundtwostore.com'
             },
             {
                 id: 's3',
@@ -760,7 +815,8 @@
                 address: 'Brick Lane, London, UK',
                 specialty: 'Classic British military gear, 70s leather, and retro sportswear.',
                 priceScale: '$$$',
-                rating: '4.7'
+                rating: '4.7',
+                website: 'https://www.rokit.co.uk'
             },
             {
                 id: 's4',
@@ -769,7 +825,8 @@
                 address: 'Harajuku, Tokyo, Japan',
                 specialty: 'Huge subterranean vintage warehouse with meticulous Japanese curation.',
                 priceScale: '$$',
-                rating: '4.9'
+                rating: '4.9',
+                website: 'https://www.kinji.jp'
             }
         ];
 
@@ -1112,25 +1169,34 @@
 
             const filtered = allShops.filter(s => currentShopCity === 'all' || s.city.toLowerCase().includes(currentShopCity.toLowerCase()));
 
-            grid.innerHTML = filtered.map(shop => `
-                <div class="bg-cardBg p-5 rounded-xl border border-borderMuted hover:border-amber-400 transition-all font-mono text-xs flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center justify-between mb-2">
-                            <span class="px-2 py-0.5 rounded bg-amber-400/10 text-amber-400 border border-amber-400/30 text-[10px] font-bold">
-                                ${shop.city}
-                            </span>
-                            <span class="text-stone-400 text-[11px]">${shop.priceScale}</span>
+            grid.innerHTML = filtered.map(shop => {
+                const siteBtn = shop.website 
+                    ? `<a href="${shop.website}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation();" class="text-acid hover:underline inline-flex items-center space-x-1">
+                        <span>Visit Site</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+                       </a>`
+                    : `<span class="text-stone-500">No Web Link</span>`;
+
+                return `
+                    <div class="bg-cardBg p-5 rounded-xl border border-borderMuted hover:border-amber-400 transition-all font-mono text-xs flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="px-2 py-0.5 rounded bg-amber-400/10 text-amber-400 border border-amber-400/30 text-[10px] font-bold">
+                                    ${shop.city}
+                                </span>
+                                <span class="text-stone-400 text-[11px]">${shop.priceScale}</span>
+                            </div>
+                            <h4 class="font-serif text-lg font-bold text-parchment mb-1">${shop.name}</h4>
+                            <div class="text-stone-500 text-[11px] mb-3"><i class="fa-solid fa-location-dot mr-1"></i> ${shop.address}</div>
+                            <p class="text-stone-300 font-sans text-xs">${shop.specialty}</p>
                         </div>
-                        <h4 class="font-serif text-lg font-bold text-parchment mb-1">${shop.name}</h4>
-                        <div class="text-stone-500 text-[11px] mb-3"><i class="fa-solid fa-location-dot mr-1"></i> ${shop.address}</div>
-                        <p class="text-stone-300 font-sans text-xs">${shop.specialty}</p>
+                        <div class="mt-4 pt-3 border-t border-borderMuted/60 flex items-center justify-between text-stone-400 text-[11px]">
+                            ${siteBtn}
+                            <span class="text-acid"><i class="fa-solid fa-star text-[10px]"></i> ${shop.rating || '4.8'}</span>
+                        </div>
                     </div>
-                    <div class="mt-4 pt-3 border-t border-borderMuted/60 flex items-center justify-between text-stone-400 text-[11px]">
-                        <span>Verified Destination</span>
-                        <span class="text-acid"><i class="fa-solid fa-star text-[10px]"></i> ${shop.rating || '4.8'}</span>
-                    </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
         }
 
         function openShopModal() {
@@ -1145,6 +1211,7 @@
             const name = document.getElementById('modal-shop-name').value;
             const city = document.getElementById('modal-shop-city').value;
             const price = document.getElementById('modal-shop-price').value;
+            const url = document.getElementById('modal-shop-url').value;
             const specialty = document.getElementById('modal-shop-specialty').value;
 
             if(!name || !city || !specialty) return;
@@ -1156,6 +1223,7 @@
                 address: city + ' Spot',
                 specialty: specialty,
                 priceScale: price,
+                website: url || null,
                 rating: '5.0'
             };
 
