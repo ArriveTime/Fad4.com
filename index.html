@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FAD4.COM — Vintage, Fashion Trends & Thrift Radar</title>
+    <title>FAD4.COM — Fashion At a Discount 4 You</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -11,19 +11,18 @@
             theme: {
                 extend: {
                     colors: {
-                        noir: '#0c0c0e',
-                        parchment: '#f7f4ee',
-                        cream: '#eae4d9',
-                        acid: '#d4ff00',
-                        crimson: '#e63946',
-                        charcoal: '#18181c',
-                        cardBg: '#131317',
-                        borderMuted: '#2a2a32'
+                        stoneBg: '#F9F8F6',
+                        cardBg: '#FFFFFF',
+                        ink: '#1A1A1A',
+                        inkMuted: '#666660',
+                        inkLight: '#8C8C84',
+                        borderWarm: '#E7E4DC',
+                        accentDark: '#2C2C2A',
+                        terracotta: '#C85A32'
                     },
                     fontFamily: {
-                        display: ['Syne', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif'],
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        serif: ['Playfair Display', 'Georgia', 'serif'],
+                        sans: ['Plus Jakarta Sans', '-apple-system', 'sans-serif'],
                         mono: ['JetBrains Mono', 'monospace']
                     }
                 }
@@ -33,1436 +32,561 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Playfair+Display:ital,wght@0,600;0,800;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: #0c0c0e; }
-        ::-webkit-scrollbar-thumb { background: #2a2a32; border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: #d4ff00; }
-        
-        .ticker-wrap { overflow: hidden; white-space: nowrap; }
-        .ticker-move { display: inline-block; animation: ticker 35s linear infinite; }
-        @keyframes ticker {
-            0% { transform: translate3d(0, 0, 0); }
-            100% { transform: translate3d(-50%, 0, 0); }
-        }
-        
-        .noise-bg {
-            background-image: radial-gradient(#2a2a32 0.75px, transparent 0.75px);
-            background-size: 16px 16px;
-        }
-
-        .toast-enter {
-            animation: toastIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-        @keyframes toastIn {
-            from { opacity: 0; transform: translateY(12px) scale(0.95); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
-        }
-    </style>
 </head>
-<body class="bg-noir text-parchment font-sans antialiased selection:bg-acid selection:text-noir min-h-screen flex flex-col relative">
+<body class="bg-stoneBg text-ink font-sans antialiased selection:bg-ink selection:text-stoneBg min-h-screen flex flex-col">
 
-    <!-- TOAST FEEDBACK CONTAINER -->
-    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
-
-    <!-- TOP TICKER BAR -->
-    <div class="bg-acid text-noir py-1.5 px-4 font-mono text-xs uppercase tracking-widest font-bold border-b border-noir ticker-wrap flex items-center z-40 select-none">
-        <div class="ticker-move flex items-center space-x-8">
-            <span>⚡ FAD4 RADAR: 90s Single-Stitch Band Tees surge +38% in demand</span>
-            <span>✦ Carhartt Detroit Jackets holding prime resale comps ($120-$240)</span>
-            <span>⚡ Vintage Graphic Sweatshirts & Sun Fades trending for Fall</span>
-            <span>✦ Estate Sale Season Peak: 4 Spotter Tips added to Directory</span>
-            <span>⚡ FAD4 RADAR: 90s Single-Stitch Band Tees surge +38% in demand</span>
-            <span>✦ Carhartt Detroit Jackets holding prime resale comps ($120-$240)</span>
-        </div>
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 bg-ink text-stoneBg px-4 py-3 rounded-lg shadow-lg font-sans text-xs flex items-center space-x-3 transition-all duration-300 transform translate-y-20 opacity-0 pointer-events-none">
+        <i class="fa-solid fa-circle-check text-terracotta text-sm"></i>
+        <span id="toast-message">Notification</span>
     </div>
 
-    <!-- MAIN EDITORIAL HEADER -->
-    <header class="border-b border-borderMuted bg-noir/95 backdrop-blur-md sticky top-0 z-30">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                
-                <!-- Logo & Subhead -->
-                <div>
-                    <div class="flex items-baseline space-x-3">
-                        <a href="#" class="font-display text-3xl sm:text-4xl font-extrabold tracking-tighter text-parchment hover:text-acid transition-colors">
-                            FAD4<span class="text-acid">.COM</span>
-                        </a>
-                        <span class="text-xs font-mono px-2 py-0.5 rounded bg-charcoal text-acid border border-borderMuted">VOL. 04</span>
-                    </div>
-                    <p class="font-mono text-[11px] text-stone-400 mt-0.5 uppercase tracking-widest">
-                        4 Fads &bull; 4 Eras &bull; 4 Finds &bull; <span class="text-parchment">Thrift & Vintage Intelligence</span>
-                    </p>
-                </div>
-
-                <!-- Fast Nav Links -->
-                <nav class="flex items-center space-x-2 sm:space-x-3 text-xs font-mono uppercase tracking-wider overflow-x-auto pb-1 md:pb-0">
-                    <a href="#top4-section" class="px-3 py-1.5 rounded bg-charcoal hover:bg-acid hover:text-noir transition-colors border border-borderMuted whitespace-nowrap">
-                        <i class="fa-solid fa-fire mr-1 text-crimson"></i> Top 4 Fads
-                    </a>
-                    <a href="#feed-section" class="px-3 py-1.5 rounded bg-charcoal hover:bg-acid hover:text-noir transition-colors border border-borderMuted whitespace-nowrap">
-                        <i class="fa-solid fa-compass mr-1 text-acid"></i> Feed
-                    </a>
-                    <a href="#calculator-section" class="px-3 py-1.5 rounded bg-charcoal hover:bg-acid hover:text-noir transition-colors border border-borderMuted whitespace-nowrap">
-                        <i class="fa-solid fa-calculator mr-1 text-blue-400"></i> Flip Estimator
-                    </a>
-                    <a href="#spotter-section" class="px-3 py-1.5 rounded bg-charcoal hover:bg-acid hover:text-noir transition-colors border border-borderMuted whitespace-nowrap">
-                        <i class="fa-solid fa-microscope mr-1 text-purple-400"></i> Tag Guide
-                    </a>
-                    <a href="#directory-section" class="px-3 py-1.5 rounded bg-charcoal hover:bg-acid hover:text-noir transition-colors border border-borderMuted whitespace-nowrap">
-                        <i class="fa-solid fa-store mr-1 text-amber-400"></i> Shop Spots
-                    </a>
-                    <a href="#disclaimer-section" class="px-3 py-1.5 rounded bg-charcoal hover:bg-acid hover:text-noir transition-colors border border-borderMuted whitespace-nowrap">
-                        <i class="fa-solid fa-shield-halved mr-1 text-stone-400"></i> Legal
-                    </a>
-                </nav>
+    <!-- SIMPLE EDITORIAL HEADER -->
+    <header class="border-b border-borderWarm bg-stoneBg/90 backdrop-blur-sm sticky top-0 z-40">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+            
+            <!-- Brand Identity -->
+            <div class="text-center sm:text-left">
+                <a href="#" class="font-serif text-2xl sm:text-3xl font-bold tracking-tight text-ink hover:text-terracotta transition-colors">
+                    FAD4<span class="font-sans font-normal text-terracotta text-xl sm:text-2xl">.com</span>
+                </a>
+                <span class="block text-xs uppercase tracking-widest text-inkMuted font-medium mt-0.5">
+                    Fashion At a Discount 4 You
+                </span>
             </div>
+
+            <!-- Clean Navigation Links -->
+            <nav class="flex items-center space-x-6 text-xs uppercase tracking-wider font-semibold text-inkMuted">
+                <a href="#daily-fads" class="hover:text-ink transition-colors">Daily 4 Updates</a>
+                <a href="#thrift-finder" class="hover:text-ink transition-colors">Thrift Locator</a>
+                <a href="#directory" class="hover:text-ink transition-colors">Directory</a>
+                <a href="#disclaimer" class="hover:text-ink transition-colors text-inkLight">Legal</a>
+            </nav>
         </div>
     </header>
 
-    <!-- HERO EDITORIAL BANNER -->
-    <section class="border-b border-borderMuted bg-charcoal relative overflow-hidden noise-bg py-10 lg:py-14">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                
-                <div class="lg:col-span-7 space-y-5">
-                    <div class="inline-flex items-center space-x-2 px-3 py-1 bg-noir border border-acid/30 rounded-full text-xs font-mono text-acid">
-                        <span class="w-2 h-2 rounded-full bg-acid animate-pulse"></span>
-                        <span>DAILY THRIFT & MARKETPLACE RADAR</span>
-                    </div>
-                    <h1 class="font-serif text-3xl sm:text-5xl font-extrabold text-parchment leading-tight">
-                        Spot passing trends before they fade. Track vintage grails before they sell.
-                    </h1>
-                    <p class="text-stone-300 text-sm sm:text-base max-w-xl font-light">
-                        Fad4.com evaluates fast-moving fashion trends, high-margin vintage t-shirt tags, canvas workwear comps, and local thrift store destinations.
-                    </p>
-                    
-                    <!-- Quick Metrics Bar -->
-                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-3 border-t border-borderMuted/60 font-mono text-xs">
-                        <div class="bg-noir/80 p-2.5 rounded border border-borderMuted">
-                            <div class="text-stone-400 text-[10px]">AVG FLIP ROI</div>
-                            <div class="text-lg font-bold text-acid mt-0.5">340%</div>
-                        </div>
-                        <div class="bg-noir/80 p-2.5 rounded border border-borderMuted">
-                            <div class="text-stone-400 text-[10px]">PEAK ERA</div>
-                            <div class="text-lg font-bold text-parchment mt-0.5">1990 - 1999</div>
-                        </div>
-                        <div class="bg-noir/80 p-2.5 rounded border border-borderMuted">
-                            <div class="text-stone-400 text-[10px]">TOP CATEGORY</div>
-                            <div class="text-lg font-bold text-crimson mt-0.5">Single Stitch</div>
-                        </div>
-                        <div class="bg-noir/80 p-2.5 rounded border border-borderMuted">
-                            <div class="text-stone-400 text-[10px]">DIR SPOTS</div>
-                            <div class="text-lg font-bold text-amber-400 mt-0.5">Global Cities</div>
-                        </div>
-                    </div>
-                </div>
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="flex-grow max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16">
 
-                <!-- Interactive Widget: "Fad or Forever" Live Inspector -->
-                <div class="lg:col-span-5">
-                    <div class="bg-noir p-6 rounded-xl border border-borderMuted shadow-2xl relative">
-                        <div class="flex items-center justify-between pb-3 mb-4 border-b border-borderMuted">
-                            <span class="font-mono text-xs uppercase text-acid font-bold tracking-wider">
-                                <i class="fa-solid fa-wand-magic-sparkles mr-1"></i> Interactive Diagnostic
-                            </span>
-                            <span class="text-[10px] font-mono px-2 py-0.5 bg-charcoal text-stone-400 rounded">LIVE EVALUATOR</span>
-                        </div>
-                        <h3 class="font-serif text-xl font-bold text-parchment mb-1">Fad or Forever?</h3>
-                        <p class="text-xs text-stone-400 mb-4">Run any item through our 4-factor trend longevity calculator.</p>
-                        
-                        <form id="fad-tester-form" class="space-y-3 font-mono text-xs">
-                            <div>
-                                <label class="block text-stone-300 mb-1">1. Item Category</label>
-                                <select id="test-category" class="w-full bg-charcoal border border-borderMuted rounded p-2 text-parchment focus:border-acid outline-none">
-                                    <option value="tee">90s Graphic / Concert Band Tee</option>
-                                    <option value="workwear">Carhartt / Canvas Heavy Workwear</option>
-                                    <option value="fastfashion">Micro-Trend Fast Fashion Piece</option>
-                                    <option value="leather">Leather Trench / Outerwear</option>
-                                    <option value="y2k">Y2K Poly Synthetic Techwear</option>
-                                </select>
-                            </div>
+        <!-- HERO SECTION -->
+        <section class="text-center max-w-3xl mx-auto space-y-4 pt-4">
+            <span class="inline-block px-3 py-1 bg-white border border-borderWarm rounded-full text-[11px] uppercase tracking-widest text-terracotta font-semibold">
+                Curated Fashion & Thrift Radar
+            </span>
+            <h1 class="font-serif text-3xl sm:text-5xl font-bold text-ink leading-tight">
+                Fashion At a Discount <span class="italic font-normal">4 You</span>
+            </h1>
+            <p class="text-inkMuted text-sm sm:text-base leading-relaxed font-normal max-w-2xl mx-auto">
+                Discover curated thrift stores, local Goodwill locations, daily fashion trend updates, and high-value discount portals—all in one clean, quiet space.
+            </p>
+        </section>
 
-                            <div>
-                                <label class="block text-stone-300 mb-1">2. Fabric & Construction</label>
-                                <select id="test-fabric" class="w-full bg-charcoal border border-borderMuted rounded p-2 text-parchment focus:border-acid outline-none">
-                                    <option value="singlestitch">Single-Stitch Hem / Vintage Tag (USA)</option>
-                                    <option value="heavy">100% Heavyweight Cotton (12oz+)</option>
-                                    <option value="blend">Poly-Blend / Ultra Fast Synthetic</option>
-                                </select>
-                            </div>
-
-                            <div class="grid grid-cols-2 gap-3">
-                                <div>
-                                    <label class="block text-stone-300 mb-1">3. Estimated Age</label>
-                                    <select id="test-age" class="w-full bg-charcoal border border-borderMuted rounded p-2 text-parchment focus:border-acid outline-none">
-                                        <option value="20">20+ Years (Pre-2005)</option>
-                                        <option value="10">10-19 Years (Vintage/Retro)</option>
-                                        <option value="0">Modern (Post-2018)</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="block text-stone-300 mb-1">4. Current Hype</label>
-                                    <select id="test-hype" class="w-full bg-charcoal border border-borderMuted rounded p-2 text-parchment focus:border-acid outline-none">
-                                        <option value="organic">Organic Collector Demand</option>
-                                        <option value="viral">Viral TikTok/Social Spike</option>
-                                        <option value="fading">Declining Search Interest</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <button type="button" id="btn-run-diagnostic" class="w-full bg-acid text-noir font-bold py-2.5 rounded uppercase tracking-wider hover:bg-yellow-300 transition-colors mt-2 text-xs">
-                                Calculate Trend Score & Verdict
-                            </button>
-                        </form>
-
-                        <div id="fad-test-result" class="mt-4 p-3 bg-charcoal rounded border border-acid/40 text-xs font-mono space-y-1">
-                            <!-- Injected dynamically -->
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- SECTION 1: TOP 4 FADS RIGHT NOW -->
-    <section id="top4-section" class="py-12 border-b border-borderMuted bg-noir">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 pb-3 border-b border-borderMuted">
+        <!-- SECTION 1: THE DAILY 4 FASHION & DISCOUNT UPDATES -->
+        <section id="daily-fads" class="space-y-6 pt-4">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between border-b border-borderWarm pb-4 gap-4">
                 <div>
-                    <span class="font-mono text-xs text-acid uppercase tracking-widest font-bold">THE ESSENTIAL QUARTET</span>
-                    <h2 class="font-serif text-3xl font-extrabold text-parchment mt-0.5">
-                        Top 4 Fads & Grails Right Now
-                    </h2>
-                </div>
-                <p class="text-stone-400 text-xs font-mono mt-2 md:mt-0">Click any card or 'Inspect Trend' for target tags & thrift tips</p>
-            </div>
-
-            <!-- Grid of 4 Featured Fads -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="top4-container">
-                <!-- Dynamically populated by JS -->
-            </div>
-
-        </div>
-    </section>
-
-    <!-- SECTION 2: SEARCH & FILTERABLE RADAR FEED -->
-    <section id="feed-section" class="py-12 border-b border-borderMuted bg-charcoal noise-bg">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
-            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-                <div>
-                    <span class="font-mono text-xs text-acid uppercase tracking-widest font-bold">REAL-TIME ARCHIVE</span>
-                    <h2 class="font-serif text-3xl font-bold text-parchment mt-0.5">Marketplace & Trend Feed</h2>
+                    <span class="text-xs font-semibold uppercase tracking-widest text-terracotta">EDITORIAL READS</span>
+                    <h2 class="font-serif text-2xl sm:text-3xl font-bold text-ink mt-0.5">The Daily 4 Updates</h2>
                 </div>
 
-                <!-- Live Search Bar -->
-                <div class="relative w-full md:w-72">
-                    <i class="fa-solid fa-search absolute left-3 top-1/2 -translate-y-1/2 text-stone-500 text-xs"></i>
-                    <input type="text" id="feed-search" placeholder="Search tee, tag, era, shop..." 
-                        class="w-full bg-noir border border-borderMuted rounded-lg pl-9 pr-3 py-2 text-xs text-parchment placeholder-stone-500 focus:outline-none focus:border-acid font-mono">
+                <!-- Simple Filter Buttons -->
+                <div class="flex items-center space-x-2 text-xs font-medium" id="filter-container">
+                    <button data-cat="all" class="filter-btn px-3 py-1.5 rounded-full bg-ink text-stoneBg transition-all">All Reads</button>
+                    <button data-cat="womens" class="filter-btn px-3 py-1.5 rounded-full bg-white text-inkMuted border border-borderWarm hover:border-ink transition-all">Women's</button>
+                    <button data-cat="mens" class="filter-btn px-3 py-1.5 rounded-full bg-white text-inkMuted border border-borderWarm hover:border-ink transition-all">Men's</button>
+                    <button data-cat="thrift" class="filter-btn px-3 py-1.5 rounded-full bg-white text-inkMuted border border-borderWarm hover:border-ink transition-all">Thrift & Vintage</button>
                 </div>
             </div>
 
-            <!-- Category Filter Tabs -->
-            <div class="flex items-center space-x-2 overflow-x-auto pb-3 mb-6 font-mono text-xs border-b border-borderMuted/50" id="category-tabs">
-                <button data-cat="all" class="cat-btn px-4 py-1.5 rounded-full border border-acid bg-acid text-noir font-bold transition-all whitespace-nowrap">
-                    All Finds & Trends
-                </button>
-                <button data-cat="fads" class="cat-btn px-4 py-1.5 rounded-full border border-borderMuted bg-noir text-stone-300 hover:border-acid transition-all whitespace-nowrap">
-                    🔥 Current Fads
-                </button>
-                <button data-cat="vintage" class="cat-btn px-4 py-1.5 rounded-full border border-borderMuted bg-noir text-stone-300 hover:border-acid transition-all whitespace-nowrap">
-                    👕 Vintage & Tees
-                </button>
-                <button data-cat="shops" class="cat-btn px-4 py-1.5 rounded-full border border-borderMuted bg-noir text-stone-300 hover:border-acid transition-all whitespace-nowrap">
-                    🏪 Thrift & Shops
-                </button>
+            <!-- 4 Featured Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="articles-grid">
+                <!-- Javascript will inject 4 articles here -->
             </div>
+        </section>
 
-            <!-- Main Items Feed Grid -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="feed-grid">
-                <!-- Injected via JavaScript -->
-            </div>
-
-        </div>
-    </section>
-
-    <!-- SECTION 3: THRIFT & VINTAGE FLIP ESTIMATOR CALCULATOR -->
-    <section id="calculator-section" class="py-14 border-b border-borderMuted bg-noir">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
-            <div class="max-w-3xl mx-auto text-center mb-10">
-                <span class="font-mono text-xs text-acid uppercase tracking-widest font-bold">RESELLER TOOLKIT</span>
-                <h2 class="font-serif text-3xl sm:text-4xl font-extrabold text-parchment mt-1">
-                    Thrift & Vintage Flip Estimator
-                </h2>
-                <p class="text-stone-400 text-xs sm:text-sm font-mono mt-1.5">
-                    Calculate net margins, platform marketplace fees, shipping costs, and profit ROI before buying at the thrift rack.
+        <!-- SECTION 2: THRIFT & GOODWILL STORE LOCATOR -->
+        <section id="thrift-finder" class="bg-cardBg border border-borderWarm rounded-2xl p-6 sm:p-10 space-y-8 shadow-sm">
+            <div class="max-w-2xl">
+                <span class="text-xs font-semibold uppercase tracking-widest text-terracotta">STORE LOCATOR & MAPS</span>
+                <h2 class="font-serif text-2xl sm:text-3xl font-bold text-ink mt-1">Thrift & Goodwill Finder</h2>
+                <p class="text-inkMuted text-xs sm:text-sm mt-1">
+                    Enter your city or ZIP code to search official store locators and local Google Maps directions instantly.
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <!-- ZIP / City Search Box -->
+            <div class="bg-stoneBg p-4 sm:p-6 rounded-xl border border-borderWarm space-y-4">
+                <form id="locator-form" class="flex flex-col sm:flex-row gap-3">
+                    <div class="relative flex-grow">
+                        <i class="fa-solid fa-location-dot absolute left-3.5 top-1/2 -translate-y-1/2 text-inkLight text-sm"></i>
+                        <input type="text" id="locator-input" placeholder="Enter ZIP code or City (e.g., 90210, Austin, Chicago)..." 
+                            class="w-full bg-white border border-borderWarm rounded-lg pl-10 pr-4 py-3 text-xs sm:text-sm text-ink placeholder-inkLight focus:outline-none focus:border-ink transition-colors">
+                    </div>
+                    <button type="submit" class="bg-ink text-stoneBg hover:bg-terracotta transition-colors px-6 py-3 rounded-lg text-xs font-semibold uppercase tracking-wider flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <span>Find Stores</span>
+                    </button>
+                </form>
+
+                <!-- Search Action Links Output -->
+                <div id="locator-results" class="hidden pt-3 border-t border-borderWarm/70 space-y-3 font-sans text-xs">
+                    <span class="text-inkMuted font-medium block">Direct Search Links for "<span id="search-term-display" class="text-ink font-semibold"></span>":</span>
+                    <div class="flex flex-wrap gap-2">
+                        <a id="link-goodwill" href="#" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 rounded bg-white border border-borderWarm hover:border-ink text-ink font-semibold inline-flex items-center space-x-2 transition-colors">
+                            <i class="fa-solid fa-store text-terracotta"></i>
+                            <span>Goodwill Official Locator</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-inkLight"></i>
+                        </a>
+                        <a id="link-gmaps" href="#" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 rounded bg-white border border-borderWarm hover:border-ink text-ink font-semibold inline-flex items-center space-x-2 transition-colors">
+                            <i class="fa-solid fa-map-location-dot text-blue-600"></i>
+                            <span>Google Maps Thrift Search</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-inkLight"></i>
+                        </a>
+                        <a id="link-salvation" href="#" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 rounded bg-white border border-borderWarm hover:border-ink text-ink font-semibold inline-flex items-center space-x-2 transition-colors">
+                            <i class="fa-solid fa-shield-heart text-red-600"></i>
+                            <span>Salvation Army Stores</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-inkLight"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Featured National Thrift Chains Grid -->
+            <div>
+                <h3 class="text-xs uppercase tracking-wider font-semibold text-inkMuted mb-4">Major Thrift Chains & Store Directories</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="national-chains-grid">
+                    <!-- Injected by JS -->
+                </div>
+            </div>
+
+            <!-- Inline "Add Local Favorite Store" -->
+            <div class="pt-6 border-t border-borderWarm">
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="text-xs uppercase tracking-wider font-semibold text-ink">My Saved Local Thrift Spots</h3>
+                    <button id="toggle-add-form" class="text-xs text-terracotta hover:underline font-medium">
+                        <i class="fa-solid fa-plus mr-1"></i> Add Local Spot
+                    </button>
+                </div>
+
+                <!-- Add Form (hidden by default) -->
+                <form id="add-spot-form" class="hidden bg-stoneBg p-4 rounded-xl border border-borderWarm mb-4 space-y-3 font-sans text-xs">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <input type="text" id="spot-name" placeholder="Store Name (e.g. Vintage Vault)" required class="bg-white border border-borderWarm rounded p-2.5 text-ink outline-none">
+                        <input type="text" id="spot-city" placeholder="City / State (e.g. Austin, TX)" required class="bg-white border border-borderWarm rounded p-2.5 text-ink outline-none">
+                        <input type="url" id="spot-url" placeholder="Website URL (optional)" class="bg-white border border-borderWarm rounded p-2.5 text-ink outline-none">
+                    </div>
+                    <div class="flex justify-end space-x-2">
+                        <button type="button" id="btn-cancel-spot" class="px-3 py-1.5 rounded text-inkMuted hover:text-ink">Cancel</button>
+                        <button type="submit" class="px-4 py-1.5 bg-ink text-stoneBg rounded font-semibold hover:bg-terracotta transition-colors">Save Store</button>
+                    </div>
+                </form>
+
+                <!-- Saved List -->
+                <div id="saved-spots-list" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: CURATED FASHION & DISCOUNT DIRECTORY -->
+        <section id="directory" class="space-y-6 pt-4">
+            <div>
+                <span class="text-xs font-semibold uppercase tracking-widest text-terracotta">VERIFIED LINKS</span>
+                <h2 class="font-serif text-2xl sm:text-3xl font-bold text-ink mt-0.5">Fashion & Discount Portals</h2>
+                <p class="text-inkMuted text-xs sm:text-sm mt-1">Direct links to world-class trend reporting and trusted secondhand marketplaces.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 
-                <!-- Calculator Form -->
-                <div class="lg:col-span-7 bg-cardBg p-6 sm:p-7 rounded-2xl border border-borderMuted shadow-xl">
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 mb-5 border-b border-borderMuted gap-3">
-                        <span class="font-mono text-xs text-stone-400 uppercase font-bold">Input Financials</span>
-                        
-                        <!-- Quick Presets -->
-                        <div class="flex items-center space-x-1.5 text-xs font-mono flex-wrap gap-y-1">
-                            <span class="text-stone-500 text-[11px] mr-1">Presets:</span>
-                            <button type="button" data-preset="bandTee" class="calc-preset-btn px-2.5 py-1 rounded bg-noir text-acid border border-borderMuted hover:border-acid">Band Tee</button>
-                            <button type="button" data-preset="jacket" class="calc-preset-btn px-2.5 py-1 rounded bg-noir text-amber-400 border border-borderMuted hover:border-amber-400">Work Jacket</button>
-                            <button type="button" data-preset="trench" class="calc-preset-btn px-2.5 py-1 rounded bg-noir text-purple-400 border border-borderMuted hover:border-purple-400">Leather Coat</button>
-                            <button type="button" data-preset="sweatshirt" class="calc-preset-btn px-2.5 py-1 rounded bg-noir text-blue-400 border border-borderMuted hover:border-blue-400">Sweatshirt</button>
-                        </div>
+                <!-- Column A: Fashion & Trend Publications -->
+                <div class="bg-cardBg p-6 rounded-2xl border border-borderWarm space-y-4 shadow-sm">
+                    <div class="flex items-center space-x-2 pb-3 border-b border-borderWarm">
+                        <i class="fa-solid fa-newspaper text-terracotta text-sm"></i>
+                        <h3 class="font-serif text-lg font-bold text-ink">Daily Fashion Publications</h3>
                     </div>
-
-                    <form id="calc-form" class="space-y-4 font-mono text-xs" onsubmit="event.preventDefault();">
-                        <div>
-                            <label class="block text-stone-300 font-bold mb-1">Item Title / Description</label>
-                            <input type="text" id="calc-title" value="90s Single-Stitch Graphic Tee" 
-                                class="w-full bg-noir border border-borderMuted rounded p-2.5 text-parchment focus:border-acid outline-none">
-                        </div>
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-stone-300 font-bold mb-1">Thrift / Buy Price ($)</label>
-                                <input type="number" id="calc-buy" value="6.00" step="0.5" min="0"
-                                    class="w-full bg-noir border border-borderMuted rounded p-2.5 text-parchment focus:border-acid outline-none text-sm">
-                            </div>
-                            <div>
-                                <label class="block text-stone-300 font-bold mb-1">Estimated Resale Price ($)</label>
-                                <input type="number" id="calc-resale" value="85.00" step="1" min="0"
-                                    class="w-full bg-noir border border-borderMuted rounded p-2.5 text-parchment focus:border-acid outline-none text-sm">
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                            <div>
-                                <label class="block text-stone-300 font-bold mb-1">Platform Fee</label>
-                                <select id="calc-platform" class="w-full bg-noir border border-borderMuted rounded p-2.5 text-parchment focus:border-acid outline-none">
-                                    <option value="13.25">eBay (~13.25%)</option>
-                                    <option value="20.0">Poshmark (20%)</option>
-                                    <option value="10.0">Depop (~10%)</option>
-                                    <option value="9.0">Grailed (9%)</option>
-                                    <option value="0.0">Local / Cash (0%)</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-stone-300 font-bold mb-1">Shipping ($)</label>
-                                <input type="number" id="calc-shipping" value="5.50" step="0.5" min="0"
-                                    class="w-full bg-noir border border-borderMuted rounded p-2.5 text-parchment focus:border-acid outline-none">
-                            </div>
-                            <div>
-                                <label class="block text-stone-300 font-bold mb-1">Cleaning/Prep ($)</label>
-                                <input type="number" id="calc-cleaning" value="2.00" step="0.5" min="0"
-                                    class="w-full bg-noir border border-borderMuted rounded p-2.5 text-parchment focus:border-acid outline-none">
-                            </div>
-                        </div>
-                    </form>
-                </div>
-
-                <!-- Calculator Output Dashboard -->
-                <div class="lg:col-span-5 bg-cardBg p-6 sm:p-7 rounded-2xl border border-acid/40 shadow-2xl relative overflow-hidden">
-                    <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-acid/5 rounded-full blur-2xl"></div>
-                    
-                    <span class="font-mono text-xs text-acid uppercase font-bold tracking-widest block mb-3">
-                        <i class="fa-solid fa-chart-line mr-1"></i> Flip Margin Analysis
-                    </span>
-
-                    <div class="space-y-4">
-                        
-                        <!-- Net Profit display -->
-                        <div class="p-4 bg-noir rounded-xl border border-borderMuted">
-                            <span class="text-xs font-mono text-stone-400 block uppercase">Net Estimated Profit</span>
-                            <div class="text-4xl font-extrabold text-acid mt-1 font-display" id="res-net-profit">
-                                $60.24
-                            </div>
-                            <div class="flex items-center space-x-3 mt-2 font-mono text-xs">
-                                <span class="text-stone-300">ROI: <strong class="text-parchment" id="res-roi">1004%</strong></span>
-                                <span class="text-stone-500">&bull;</span>
-                                <span class="text-stone-300">Margin: <strong class="text-parchment" id="res-margin">70.8%</strong></span>
-                            </div>
-                        </div>
-
-                        <!-- Financial Breakdown List -->
-                        <div class="space-y-1.5 font-mono text-xs text-stone-300 pt-1 border-t border-borderMuted">
-                            <div class="flex justify-between">
-                                <span>Gross Selling Price:</span>
-                                <span class="text-parchment font-bold" id="res-gross">$85.00</span>
-                            </div>
-                            <div class="flex justify-between text-stone-400">
-                                <span>- Initial Buy Cost:</span>
-                                <span id="res-buy-cost">-$6.00</span>
-                            </div>
-                            <div class="flex justify-between text-stone-400">
-                                <span>- Marketplace Fees:</span>
-                                <span id="res-fee-cost">-$11.26</span>
-                            </div>
-                            <div class="flex justify-between text-stone-400">
-                                <span>- Shipping & Prep:</span>
-                                <span id="res-ship-cost">-$7.50</span>
-                            </div>
-                        </div>
-
-                        <!-- Viability Rating Banner -->
-                        <div id="res-rating-box" class="p-3 rounded border font-mono text-xs flex items-center space-x-3 bg-acid/10 border-acid text-acid">
-                            <i class="fa-solid fa-circle-check text-lg"></i>
-                            <div>
-                                <div class="font-bold uppercase" id="res-rating-title">HIGH PROFIT FLIP</div>
-                                <div class="text-[11px] opacity-90" id="res-rating-desc">Outstanding profit margin. Grab this immediately at the thrift!</div>
-                            </div>
-                        </div>
-
-                        <!-- Copy Resale Pitch button -->
-                        <button type="button" id="btn-copy-summary" class="w-full py-2.5 bg-noir border border-borderMuted hover:border-acid text-parchment text-xs font-mono rounded font-bold uppercase transition-colors flex items-center justify-center space-x-2">
-                            <i class="fa-regular fa-copy"></i>
-                            <span>Copy Flip Summary</span>
-                        </button>
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-    </section>
-
-    <!-- SECTION 4: VINTAGE SPOTTER'S GUIDE & TAG DECODER -->
-    <section id="spotter-section" class="py-14 border-b border-borderMuted bg-charcoal noise-bg">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-8">
-                <div>
-                    <span class="font-mono text-xs text-acid uppercase tracking-widest font-bold">AUTHENTICATION PROTOCOL</span>
-                    <h2 class="font-serif text-3xl font-extrabold text-parchment mt-0.5">
-                        Vintage Spotter's Guide & Tag Decoder
-                    </h2>
-                </div>
-                <p class="text-stone-400 text-xs font-mono mt-2 md:mt-0">Click any module to inspect detailed authentication methods</p>
-            </div>
-
-            <!-- Guide Interactive Tabs -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-6 font-mono text-xs">
-                <button data-guide="singlestitch" class="guide-tab-btn p-4 rounded-xl border border-acid bg-acid text-noir font-bold text-left transition-all">
-                    <div class="text-lg mb-1"><i class="fa-solid fa-scissors"></i></div>
-                    1. Single Stitch Check
-                </button>
-                <button data-guide="tags" class="guide-tab-btn p-4 rounded-xl border border-borderMuted bg-noir text-stone-300 hover:border-acid font-bold text-left transition-all">
-                    <div class="text-lg mb-1"><i class="fa-solid fa-tags"></i></div>
-                    2. Iconic Tag Bible
-                </button>
-                <button data-guide="fabric" class="guide-tab-btn p-4 rounded-xl border border-borderMuted bg-noir text-stone-300 hover:border-acid font-bold text-left transition-all">
-                    <div class="text-lg mb-1"><i class="fa-solid fa-shirt"></i></div>
-                    3. Dry Rot & Fabric Test
-                </button>
-                <button data-guide="comping" class="guide-tab-btn p-4 rounded-xl border border-borderMuted bg-noir text-stone-300 hover:border-acid font-bold text-left transition-all">
-                    <div class="text-lg mb-1"><i class="fa-solid fa-magnifying-glass-dollar"></i></div>
-                    4. eBay Sold Comps
-                </button>
-            </div>
-
-            <!-- Tab Content Display Box -->
-            <div class="bg-noir p-6 sm:p-8 rounded-2xl border border-borderMuted" id="guide-content">
-                <!-- Content dynamically swapped via JS -->
-            </div>
-
-        </div>
-    </section>
-
-    <!-- SECTION 5: VINTAGE & THRIFT SHOP DIRECTORY -->
-    <section id="directory-section" class="py-14 border-b border-borderMuted bg-noir">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
-                <div>
-                    <span class="font-mono text-xs text-acid uppercase tracking-widest font-bold">CURATED DESTINATIONS</span>
-                    <h2 class="font-serif text-3xl font-extrabold text-parchment mt-0.5">
-                        Thrift & Vintage Shop Directory
-                    </h2>
-                </div>
-
-                <div class="flex items-center space-x-3">
-                    <!-- City Filter Pills -->
-                    <div class="flex items-center space-x-1.5 overflow-x-auto py-1 font-mono text-xs">
-                        <button data-city="all" class="shop-city-btn px-3 py-1.5 rounded bg-acid text-noir font-bold">All Cities</button>
-                        <button data-city="NYC" class="shop-city-btn px-3 py-1.5 rounded bg-charcoal text-stone-300 hover:text-acid border border-borderMuted">NYC</button>
-                        <button data-city="LA" class="shop-city-btn px-3 py-1.5 rounded bg-charcoal text-stone-300 hover:text-acid border border-borderMuted">Los Angeles</button>
-                        <button data-city="London" class="shop-city-btn px-3 py-1.5 rounded bg-charcoal text-stone-300 hover:text-acid border border-borderMuted">London</button>
-                        <button data-city="Tokyo" class="shop-city-btn px-3 py-1.5 rounded bg-charcoal text-stone-300 hover:text-acid border border-borderMuted">Tokyo</button>
-                    </div>
-
-                    <button id="btn-open-shop-modal" class="px-3.5 py-1.5 rounded bg-acid text-noir font-mono text-xs font-bold uppercase hover:bg-yellow-300 transition-colors whitespace-nowrap">
-                        <i class="fa-solid fa-plus mr-1"></i> Add Spot
-                    </button>
-                </div>
-            </div>
-
-            <!-- Shops Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="shops-grid">
-                <!-- Injected via JavaScript -->
-            </div>
-
-        </div>
-    </section>
-
-    <!-- SECTION 6: LEGAL & EDITORIAL DISCLAIMER -->
-    <section id="disclaimer-section" class="py-12 border-b border-borderMuted bg-charcoal noise-bg">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 font-mono text-xs text-stone-400">
-            <div class="bg-noir p-6 sm:p-8 rounded-2xl border border-borderMuted space-y-4">
-                <div class="flex items-center space-x-2 text-acid font-bold text-sm uppercase tracking-wider">
-                    <i class="fa-solid fa-shield-halved"></i>
-                    <span>Legal & Editorial Disclaimer</span>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-[11px] leading-relaxed text-stone-300 pt-2 border-t border-borderMuted/60">
-                    <div class="space-y-3">
-                        <div>
-                            <strong class="text-parchment font-bold block mb-1">1. Independent Curation & Non-Affiliation</strong>
-                            Fad4.com is an independent digital media laboratory and trend observation directory. Fad4.com is not affiliated, associated, authorized, endorsed by, or in any way officially connected with any listed thrift stores, vintage boutiques, apparel brands, marketplaces (including eBay, Poshmark, Depop, Grailed), or trademark holders.
-                        </div>
-                        <div>
-                            <strong class="text-parchment font-bold block mb-1">2. Valuation & Financial Estimates Disclaimer</strong>
-                            All resale price ranges, margin profit estimations, ROI figures, and trend scores produced by the Thrift Flip Estimator or "Fad or Forever?" tool are provided strictly for educational, research, and informational entertainment purposes. They do not constitute formal financial advice, certified appraisals, or guarantees of sale price. Actual market values fluctuate based on condition, sizing, rarity, and buyer demand.
-                        </div>
-                    </div>
-
-                    <div class="space-y-3">
-                        <div>
-                            <strong class="text-parchment font-bold block mb-1">3. Authentication & Garment Safety</strong>
-                            Guides on single-stitching, tag decoding, and fabric dry-rot testing are community spotter methods and do not replace professional authentication services. Users are sole responsible for verifying item condition and seller credibility before completing transactions.
-                        </div>
-                        <div>
-                            <strong class="text-parchment font-bold block mb-1">4. Nominative Fair Use & External Links</strong>
-                            All brand names, logos, trademarks, and registered trademarks referenced on Fad4.com (e.g., Carhartt, Liquid Blue, Giant, Brockum, Levi's) are property of their respective owners. Their mention serves purely for identification, descriptive, and nominative fair-use reporting. Third-party links to external shop websites or maps are provided for visitor convenience; Fad4.com does not control external content, inventory, or privacy practices.
-                        </div>
+                    <div class="space-y-3" id="pub-column">
+                        <!-- Injected by JS -->
                     </div>
                 </div>
 
-                <div class="pt-3 border-t border-borderMuted/40 flex items-center justify-between text-[10px] text-stone-500">
-                    <span>Fad4.com Editorial Policy Version 1.2</span>
-                    <button type="button" onclick="window.scrollTo({top: 0, behavior: 'smooth'});" class="text-stone-400 hover:text-acid underline">
-                        Back to Top <i class="fa-solid fa-arrow-up ml-1"></i>
-                    </button>
+                <!-- Column B: Discount & Secondhand Platforms -->
+                <div class="bg-cardBg p-6 rounded-2xl border border-borderWarm space-y-4 shadow-sm">
+                    <div class="flex items-center space-x-2 pb-3 border-b border-borderWarm">
+                        <i class="fa-solid fa-tags text-terracotta text-sm"></i>
+                        <h3 class="font-serif text-lg font-bold text-ink">Online Discount & Secondhand</h3>
+                    </div>
+                    <div class="space-y-3" id="discount-column">
+                        <!-- Injected by JS -->
+                    </div>
                 </div>
+
             </div>
-        </div>
-    </section>
+        </section>
+
+        <!-- SECTION 4: DISCLAIMER -->
+        <section id="disclaimer" class="bg-cardBg p-6 rounded-2xl border border-borderWarm font-sans text-xs text-inkMuted space-y-3">
+            <div class="flex items-center space-x-2 text-ink font-semibold text-xs uppercase tracking-wider">
+                <i class="fa-solid fa-shield-halved text-terracotta"></i>
+                <span>Editorial & Legal Disclaimer</span>
+            </div>
+            <p class="leading-relaxed">
+                <strong>Fad4.com</strong> ("Fashion At a Discount 4 You") operates purely as an independent editorial link aggregator and directory. Fad4.com is not affiliated with, endorsed by, or sponsored by Goodwill Industries International, The Salvation Army, Vogue, GQ, or any listed brand, retailer, or publication. 
+            </p>
+            <p class="leading-relaxed">
+                All trademarks, logos, and brand names mentioned remain the property of their respective trademark owners. External website links are provided for informational convenience; Fad4.com does not manage inventory, pricing, or policies of third-party store locations or external websites.
+            </p>
+        </section>
+
+    </main>
 
     <!-- FOOTER -->
-    <footer class="bg-noir py-10 border-t border-borderMuted font-mono text-xs text-stone-400">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
-                <div>
-                    <a href="#" class="font-display text-2xl font-extrabold text-parchment hover:text-acid transition-colors">
-                        FAD4<span class="text-acid">.COM</span>
-                    </a>
-                    <p class="text-[11px] text-stone-500 mt-1">
-                        Independent Vintage, Fashion Trend & Thrift Curation Radar. Updated Daily.
-                    </p>
-                </div>
-
-                <div class="flex flex-wrap items-center gap-3 text-stone-400 text-[11px]">
-                    <a href="#disclaimer-section" class="hover:text-acid transition-colors">Legal Terms</a>
-                    <span>&bull;</span>
-                    <span>4 FADS</span>
-                    <span>&bull;</span>
-                    <span>4 ERAS</span>
-                    <span>&bull;</span>
-                    <span>4 FINDS</span>
-                    <span>&bull;</span>
-                    <span class="text-acid font-bold">EST. 2026</span>
-                </div>
+    <footer class="border-t border-borderWarm bg-stoneBg py-8 mt-12 text-xs font-sans text-inkMuted">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div>
+                <span class="font-serif font-bold text-ink text-base">FAD4.com</span>
+                <span class="block text-[11px] text-inkLight">Fashion At a Discount 4 You &bull; Minimalist Directory</span>
             </div>
-
-            <div class="mt-6 pt-4 border-t border-borderMuted/40 text-center sm:text-left text-[11px] text-stone-600 flex flex-col sm:flex-row justify-between">
-                <span>&copy; Fad4.com — Built for thrift flippers, vintage archivists & trend spotters. All rights reserved.</span>
-                <span class="mt-1 sm:mt-0">100% Client-Side & Independent</span>
+            <div class="flex items-center space-x-4 text-[11px]">
+                <a href="#daily-fads" class="hover:text-ink">Daily Updates</a>
+                <span>&bull;</span>
+                <a href="#thrift-finder" class="hover:text-ink">Thrift Finder</a>
+                <span>&bull;</span>
+                <a href="#disclaimer" class="hover:text-ink">Disclaimer</a>
+            </div>
+            <div class="text-[11px] text-inkLight">
+                &copy; Fad4.com. All rights reserved.
             </div>
         </div>
     </footer>
 
-    <!-- MODAL 1: ITEM DETAIL DRAWER -->
-    <div id="detail-modal" class="fixed inset-0 bg-noir/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-cardBg border border-borderMuted rounded-2xl max-w-2xl w-full p-6 sm:p-8 relative shadow-2xl max-h-[90vh] overflow-y-auto">
-            <button type="button" id="btn-close-modal" class="absolute top-4 right-4 text-stone-400 hover:text-acid text-lg font-mono p-2">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            <div id="modal-body"></div>
-        </div>
-    </div>
-
-    <!-- MODAL 2: ADD SHOP MODAL -->
-    <div id="add-shop-modal" class="fixed inset-0 bg-noir/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-cardBg border border-borderMuted rounded-2xl max-w-lg w-full p-6 sm:p-8 relative shadow-2xl">
-            <button type="button" id="btn-close-shop-modal" class="absolute top-4 right-4 text-stone-400 hover:text-acid text-lg font-mono p-2">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            
-            <h3 class="font-serif text-2xl font-bold text-parchment mb-1">Add a Thrift or Vintage Spot</h3>
-            <p class="text-xs text-stone-400 font-mono mb-5">Submit your favorite local shop or estate sale destination.</p>
-            
-            <form id="add-shop-modal-form" class="space-y-4 font-mono text-xs">
-                <div>
-                    <label class="block text-stone-300 font-bold mb-1">Shop Name</label>
-                    <input type="text" id="modal-shop-name" placeholder="e.g., Deadstock Vault" required 
-                        class="w-full bg-noir border border-borderMuted rounded p-2.5 text-parchment focus:border-acid outline-none">
-                </div>
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block text-stone-300 font-bold mb-1">City</label>
-                        <input type="text" id="modal-shop-city" placeholder="e.g., Austin, TX" required 
-                            class="w-full bg-noir border border-borderMuted rounded p-2.5 text-parchment focus:border-acid outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-stone-300 font-bold mb-1">Price Tier</label>
-                        <select id="modal-shop-price" class="w-full bg-noir border border-borderMuted rounded p-2.5 text-parchment focus:border-acid outline-none">
-                            <option value="$">$ (Bargain Thrift)</option>
-                            <option value="$$" selected>$$ (Curated Thrift)</option>
-                            <option value="$$$">$$$ (Vintage Boutique)</option>
-                            <option value="$$$$">$$$$ (Grail Archive)</option>
-                        </select>
-                    </div>
-                </div>
-                <div>
-                    <label class="block text-stone-300 font-bold mb-1">Website or Social Link (Optional)</label>
-                    <input type="url" id="modal-shop-url" placeholder="https://instagram.com/shopname or https://shopsite.com" 
-                        class="w-full bg-noir border border-borderMuted rounded p-2.5 text-parchment focus:border-acid outline-none">
-                </div>
-                <div>
-                    <label class="block text-stone-300 font-bold mb-1">Specialty & Highlights</label>
-                    <input type="text" id="modal-shop-specialty" placeholder="e.g., 90s Band Tees, Carhartt & Leather Trenches" required 
-                        class="w-full bg-noir border border-borderMuted rounded p-2.5 text-parchment focus:border-acid outline-none">
-                </div>
-                <button type="submit" class="w-full bg-acid text-noir font-bold py-3 rounded uppercase tracking-wider hover:bg-yellow-300 transition-colors mt-2 text-xs">
-                    Save Shop Spot
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <!-- JAVASCRIPT APP LOGIC -->
+    <!-- JAVASCRIPT LOGIC -->
     <script>
-        // DATA ARRAYS
+        // DATA SETS
 
-        const TOP_4_FADS = [
+        const DAILY_ARTICLES = [
             {
-                id: 'top1',
-                title: '90s Single-Stitch Band & Rap Tees',
-                era: '1990 - 1999',
-                category: 'Vintage & Tees',
-                tag: 'HIGH RESALE VALUE',
-                priceRange: '$60 - $450+',
-                image: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=600&q=80',
-                description: 'Single-stitch hems on sleeves and bottom waist indicate pre-1999 manufacturing. High demand for Giant, Brockum, and Winterland tags.',
-                targetTags: 'Giant, Brockum, Screen Stars, Anvil, Gem',
-                thriftTip: 'Check armpit seams for single stitch threads. Look for heavy cracked rubberized screenprints.',
-                trendScore: '98/100'
+                id: 'a1',
+                title: 'How to Hunt Designer Vintage at Local Thrift Chains',
+                publisher: 'Vogue Magazine',
+                category: 'thrift',
+                url: 'https://www.vogue.com/fashion',
+                date: 'Daily Feature',
+                summary: 'Essential strategies for spotting natural silk, vintage wool labels, and single-stitch construction on everyday thrift racks.'
             },
             {
-                id: 'top2',
-                title: 'Sun-Faded Canvas Work Jackets',
-                era: '1980s - 1990s',
-                category: 'Current Fads',
-                tag: 'STREETWEAR STAPLE',
-                priceRange: '$90 - $260',
-                image: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=600&q=80',
-                description: 'Carhartt Detroit (J97) and Santa Fe jackets with natural distressing, paint spatters, and sun fading command premium prices.',
-                targetTags: 'Carhartt Crafted With Pride in USA, Dickies, Walls',
-                thriftTip: 'Do not wash away oil stains or paint flecks—collectors prefer authentic work patina.',
-                trendScore: '94/100'
+                id: 'a2',
+                title: 'The Smart Buyer’s Guide to Off-Season Luxury Discounts',
+                publisher: 'Who What Wear',
+                category: 'womens',
+                url: 'https://www.whowhatwear.com',
+                date: 'Trend Update',
+                summary: 'Timing your seasonal secondhand purchases when winter coats drop in price during early summer months.'
             },
             {
-                id: 'top3',
-                title: '90s Oversized Leather Trenches',
-                era: '1990s / Y2K',
-                category: 'Current Fads',
-                tag: 'HIGH MARGIN THRIFT',
-                priceRange: '$75 - $220',
-                image: 'https://images.unsplash.com/photo-1548883354-7622d03aca27?auto=format&fit=crop&w=600&q=80',
-                description: 'Heavy matrix-style floor length black leather coats and boxy double-breasted leather blazers trending across fashion weeks.',
-                targetTags: 'Wilson Leather, Pelle Pelle, Vintage Gap, Andrew Marc',
-                thriftTip: 'Check thrift store outerwear racks for soft buttery lambskin with heavy shoulder structure.',
-                trendScore: '91/100'
+                id: 'a3',
+                title: 'Classic Menswear & Workwear Finds Under $40',
+                publisher: 'GQ Magazine',
+                category: 'mens',
+                url: 'https://www.gq.com/fashion',
+                date: 'Style Radar',
+                summary: 'Why vintage heavy canvas jackets, oxford cotton button-downs, and raw denim retain high value at secondhand outlets.'
             },
             {
-                id: 'top4',
-                title: 'Vintage Outdoor Fleece & Techwear',
-                era: 'Late 90s - 2000s',
-                category: 'Thrift & Vintage',
-                tag: 'FAST SELLER',
-                priceRange: '$45 - $150',
-                image: 'https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=600&q=80',
-                description: 'Patagonia Synchilla snap-Ts, Arc’teryx Gore-Tex shells, and vintage Nike ACG deep pile fleece jackets.',
-                targetTags: 'Patagonia Made in USA, Arc’teryx, Nike ACG, Columbia Bugaboo',
-                thriftTip: 'Inspect elastic sleeve cuffs and zipper pulls for rubber degradation or wear.',
-                trendScore: '89/100'
+                id: 'a4',
+                title: 'Sustainable Wardrobe Curation: Quality Over Fast Fashion',
+                publisher: 'Harper\'s Bazaar',
+                category: 'womens',
+                url: 'https://www.harpersbazaar.com/fashion',
+                date: 'Fashion Digest',
+                summary: 'Building a timeless, low-cost wardrobe using curated thrift stores and reputable online luxury consignment.'
             }
         ];
 
-        const FEED_ITEMS = [
+        const NATIONAL_CHAINS = [
             {
-                id: 'f1',
-                title: 'Liquid Blue 1996 Dragon Graphic Tee',
-                category: 'vintage',
-                era: '1996',
-                price: '$180 - $240',
-                buyEst: '$8 - $15',
-                tag: 'Liquid Blue Tag',
-                image: 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=600&q=80',
-                notes: 'All-over print (AOP) tie-dye featuring classic fantasy art. High collector liquidity.',
-                targetTags: 'Liquid Blue, Giant',
-                thriftTip: 'Examine print date under graphic.'
+                name: 'Goodwill Stores',
+                desc: 'Over 3,000 community thrift stores offering affordable apparel & home goods.',
+                url: 'https://www.goodwill.org/locator/',
+                icon: 'fa-store'
             },
             {
-                id: 'f2',
-                title: 'Boxy Heavyweight 90s Hoodies (14oz)',
-                category: 'fads',
-                era: 'Current Fad / 90s Blanks',
-                price: '$50 - $110',
-                buyEst: '$5 - $10',
-                tag: 'Russell Athletic / Champion Reverse Weave',
-                image: 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=600&q=80',
-                notes: 'No-drawstring oversized hoodies with dropped shoulders lead current silhouette trends.',
-                targetTags: 'Champion Made in USA, Russell Athletic',
-                thriftTip: 'Look for side gusset panels.'
+                name: 'Salvation Army Family Stores',
+                desc: 'Nationwide clothing, vintage outerwear, and household bargain centers.',
+                url: 'https://satruck.org',
+                icon: 'fa-shield-heart'
             },
             {
-                id: 'f3',
-                title: 'L-2B Flight Bomber Jacket (Olive Green)',
-                category: 'vintage',
-                era: '1980s Military',
-                price: '$95 - $180',
-                buyEst: '$12 - $20',
-                tag: 'Alpha Industries / Military Issue',
-                image: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=600&q=80',
-                notes: 'Orange lining reversible vintage flight jacket. Look for brass Scovill or IDEAL zippers.',
-                targetTags: 'Alpha Industries, Avirex',
-                thriftTip: 'Check zipper pull markings.'
+                name: 'Savers / Value Village',
+                desc: 'Large-format community secondhand department stores.',
+                url: 'https://www.savers.com/find-a-thrift-store',
+                icon: 'fa-tags'
             },
             {
-                id: 'f4',
-                title: 'Tokyo Harajuku Vintage Archive Spot',
-                category: 'shops',
-                era: 'Spotlight',
-                price: 'Shop Spot',
-                buyEst: 'Tokyo, JP',
-                tag: 'Harajuku District',
-                image: 'https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=600&q=80',
-                notes: 'Ragtag & Kinji Vintage in Harajuku remain premier global hunting grounds for 90s streetwear.',
-                targetTags: 'Japanese Archive',
-                thriftTip: 'Explore subterranean levels.'
+                name: 'Plato\'s Closet',
+                desc: 'Buy and sell trendy secondhand teen and young adult clothing.',
+                url: 'https://www.platoscloset.com/locations',
+                icon: 'fa-shirt'
             },
             {
-                id: 'f5',
-                title: 'Vintage Harley-Davidson 3D Emblem Tee',
-                category: 'vintage',
-                era: '1987 - 1992',
-                price: '$200 - $600+',
-                buyEst: '$10 - $25',
-                tag: '3D Emblem Fort Worth TX',
-                image: 'https://images.unsplash.com/photo-1576995853123-5a10305d93c0?auto=format&fit=crop&w=600&q=80',
-                notes: 'Holy grail of vintage biker tees. Ultra soft 50/50 poly cotton blend with detailed eagle art.',
-                targetTags: '3D Emblem, Holoubek',
-                thriftTip: 'Feel fabric thickness—50/50 blend feels featherlight.'
+                name: 'Buffalo Exchange',
+                desc: 'Fashion resale boutique specializing in current trends & vintage.',
+                url: 'https://www.buffaloexchange.com/locations/',
+                icon: 'fa-arrows-rotate'
             },
             {
-                id: 'f6',
-                title: 'Wide Leg 90s Raw Denim (JNCO / Levi 550)',
-                category: 'fads',
-                era: '1990s - Y2K',
-                price: '$70 - $250',
-                buyEst: '$8 - $14',
-                tag: 'Levi Red Tab 550 / 560',
-                image: 'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=600&q=80',
-                notes: 'Relaxed baggy denim replacing skinny fits across all major streetwear channels.',
-                targetTags: 'Levi 550, JNCO, SilverTab',
-                thriftTip: 'Check inside hip white care tag for 4-digit date code.'
+                name: 'Crossroads Trading',
+                desc: 'Curated secondhand clothing buy-sell-trade stores nationwide.',
+                url: 'https://crossroadstrading.com/locations/',
+                icon: 'fa-bag-shopping'
             }
         ];
 
-        const INITIAL_SHOPS = [
-            {
-                id: 's1',
-                name: 'L-Train Vintage',
-                city: 'NYC',
-                address: 'Brooklyn (Multiple Spots), NY',
-                specialty: 'Massive racks of $10-$30 vintage coats, denim, & 90s tees.',
-                priceScale: '$$',
-                rating: '4.8',
-                website: 'https://www.ltrainvintagenyc.com'
-            },
-            {
-                id: 's2',
-                name: 'Round Two Vintage',
-                city: 'LA',
-                address: 'Melrose Ave, Los Angeles, CA',
-                specialty: 'Grail-level 90s rap tees, rare sneakers, and 80s pop culture.',
-                priceScale: '$$$$',
-                rating: '4.9',
-                website: 'https://roundtwostore.com'
-            },
-            {
-                id: 's3',
-                name: 'Rokit Vintage',
-                city: 'London',
-                address: 'Brick Lane, London, UK',
-                specialty: 'Classic British military gear, 70s leather, and retro sportswear.',
-                priceScale: '$$$',
-                rating: '4.7',
-                website: 'https://www.rokit.co.uk'
-            },
-            {
-                id: 's4',
-                name: 'Kinji Used Clothing',
-                city: 'Tokyo',
-                address: 'Harajuku, Tokyo, Japan',
-                specialty: 'Huge subterranean vintage warehouse with meticulous Japanese curation.',
-                priceScale: '$$',
-                rating: '4.9',
-                website: 'https://www.kinji.jp'
-            }
+        const PUBLICATIONS = [
+            { name: 'Vogue', url: 'https://www.vogue.com', desc: 'World leader in high fashion reporting & seasonal trend runways.' },
+            { name: 'Who What Wear', url: 'https://www.whowhatwear.com', desc: 'Daily accessible style tips, trend breakdowns, and budget shopping.' },
+            { name: 'Harper\'s Bazaar', url: 'https://www.harpersbazaar.com', desc: 'Sophisticated fashion commentary, beauty, and wardrobe curation.' },
+            { name: 'GQ', url: 'https://www.gq.com', desc: 'Premier men\'s fashion, tailors, streetwear, and grooming guide.' },
+            { name: 'Refinery29', url: 'https://www.refinery29.com', desc: 'Modern style, sustainable fashion stories, and independent trends.' },
+            { name: 'Highsnobiety', url: 'https://www.highsnobiety.com', desc: 'Global authority on luxury streetwear, sneakers, and youth culture.' }
         ];
 
-        const GUIDES = {
-            singlestitch: `
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-                    <div>
-                        <span class="text-xs font-mono text-acid uppercase font-bold">AUTHENTICATION STEP 1</span>
-                        <h3 class="font-serif text-2xl font-bold text-parchment mt-1 mb-3">The Single-Stitch Hem Test</h3>
-                        <p class="text-stone-300 text-xs leading-relaxed font-mono mb-4">
-                            Before 1996–1998, garment factories used single-needle sewing machines to stitch sleeve cuffs and bottom waists. This produces <strong>one single row of stitching</strong> on the outside.
-                        </p>
-                        <div class="space-y-2 font-mono text-xs">
-                            <div class="p-3 bg-charcoal rounded border border-acid/40 text-parchment flex items-start space-x-2">
-                                <i class="fa-solid fa-circle-check text-acid mt-0.5"></i>
-                                <div><strong class="text-acid">Single Stitch (1 Line):</strong> High probability of authentic 1970s–1990s USA manufacture.</div>
-                            </div>
-                            <div class="p-3 bg-charcoal rounded border border-crimson/40 text-parchment flex items-start space-x-2">
-                                <i class="fa-solid fa-circle-xmark text-crimson mt-0.5"></i>
-                                <div><strong class="text-crimson">Double Stitch (2 Lines):</strong> Standard modern construction post-1999. Lower value unless rare limited print.</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-charcoal p-6 rounded-xl border border-borderMuted text-center font-mono space-y-2">
-                        <div class="text-4xl text-acid"><i class="fa-solid fa-ruler-horizontal"></i></div>
-                        <div class="text-xs text-stone-400 uppercase tracking-widest font-bold">Sleeve Inspection Method</div>
-                        <p class="text-[11px] text-stone-300">Flip the sleeve cuff inside out. If you see a looping thread with only 1 straight stitch on top, you have a vintage single-stitch gem!</p>
-                    </div>
-                </div>
-            `,
-            tags: `
-                <div class="space-y-4 font-mono text-xs">
-                    <span class="text-xs text-acid uppercase font-bold">TAG BIBLE & ERA MAP</span>
-                    <h3 class="font-serif text-2xl font-bold text-parchment">Iconic Vintage T-Shirt Tags to Memorize</h3>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-1">
-                        <div class="p-4 bg-charcoal rounded-xl border border-borderMuted hover:border-acid transition-colors">
-                            <div class="text-acid font-bold text-sm">GIANT TAG</div>
-                            <div class="text-stone-400 text-[11px] mt-1">1990s Band & Concert Tees</div>
-                            <p class="text-stone-300 text-[11px] mt-2">Look for "Made in USA of Components Assembled in Mexico" or pure "Made in USA".</p>
-                        </div>
-                        <div class="p-4 bg-charcoal rounded-xl border border-borderMuted hover:border-amber-400 transition-colors">
-                            <div class="text-amber-400 font-bold text-sm">BROCKUM</div>
-                            <div class="text-stone-400 text-[11px] mt-1">1980s - 1990s Heavy Metal</div>
-                            <p class="text-stone-300 text-[11px] mt-2">Black or silver foil tag. Premier licensing tag for Metallica, Pink Floyd, and Stones.</p>
-                        </div>
-                        <div class="p-4 bg-charcoal rounded-xl border border-borderMuted hover:border-purple-400 transition-colors">
-                            <div class="text-purple-400 font-bold text-sm">SCREEN STARS</div>
-                            <div class="text-stone-400 text-[11px] mt-1">1970s - 1990s Promo Blanks</div>
-                            <p class="text-stone-300 text-[11px] mt-2">Blue/White tag (80s) or Best 50/50 tag (90s). Ultra soft paper tag feel.</p>
-                        </div>
-                    </div>
-                </div>
-            `,
-            fabric: `
-                <div class="space-y-4 font-mono text-xs">
-                    <span class="text-xs text-crimson uppercase font-bold">SAFETY PROTOCOL</span>
-                    <h3 class="font-serif text-2xl font-bold text-parchment">Dry Rot & Fabric Integrity Test</h3>
-                    <p class="text-stone-300 text-xs leading-relaxed">
-                        1990s black t-shirts printed on reactive-dyed 100% cotton blanks can suffer from <strong>Dry Rot</strong>—a chemical decay rendering fabric brittle like crepe paper.
-                    </p>
-                    <div class="p-4 bg-crimson/10 border border-crimson/50 rounded-xl text-stone-200">
-                        <strong class="text-crimson block mb-1">THE TUG TEST:</strong> 
-                        Gently pull a seam at an unexposed bottom waist corner. If it tears effortlessly with a crisp snapping sound, the shirt has dry rot and will disintegrate in a wash cycle. <em>Do not buy!</em>
-                    </div>
-                </div>
-            `,
-            comping: `
-                <div class="space-y-4 font-mono text-xs">
-                    <span class="text-xs text-acid uppercase font-bold">VALUATION ACCURACY</span>
-                    <h3 class="font-serif text-2xl font-bold text-parchment">How to Search eBay Sold Comps Like a Pro</h3>
-                    <ol class="list-decimal list-inside space-y-2 text-stone-300">
-                        <li>Ignore active asking prices—sellers can ask $500 for a modern reprint.</li>
-                        <li>Filter search results exclusively by <strong>"Sold Items"</strong> and <strong>"Completed Items"</strong>.</li>
-                        <li>Search exact tag keywords: e.g. <code>"90s Liquid Blue Dragon Giant Tag"</code>.</li>
-                        <li>Check print copyright date (usually located under graphic in tiny lettering).</li>
-                    </ol>
-                </div>
-            `
-        };
+        const DISCOUNT_PLATFORMS = [
+            { name: 'Poshmark', url: 'https://poshmark.com', desc: 'Peer-to-peer fashion marketplace for secondhand & vintage clothes.' },
+            { name: 'ThredUp', url: 'https://www.thredup.com', desc: 'Massive online thrift store with verified secondhand clothing filters.' },
+            { name: 'Depop', url: 'https://www.depop.com', desc: 'Creative community marketplace for vintage t-shirts & streetwear.' },
+            { name: 'The RealReal', url: 'https://www.therealreal.com', desc: 'Authenticated luxury consignment for designer apparel & accessories.' },
+            { name: 'eBay Fashion', url: 'https://www.ebay.com/b/Clothing-Shoes-Accessories/11450/bn_1852545', desc: 'Global auction platform for vintage grails & discount apparel.' },
+            { name: 'Nordstrom Rack', url: 'https://www.nordstromrack.com', desc: 'Official outlet for top department store fashion at up to 70% off.' }
+        ];
 
-        // APPLICATION STATE
-        let currentFeedCat = 'all';
-        let currentShopCity = 'all';
+        let activeFilter = 'all';
 
-        // TOAST FEEDBACK SYSTEM
-        function showToast(message, type = 'acid') {
-            const container = document.getElementById('toast-container');
-            if(!container) return;
+        // DOM INITIALIZATION
+        document.addEventListener('DOMContentLoaded', () => {
+            renderArticles();
+            renderNationalChains();
+            renderDirectory();
+            renderSavedSpots();
+            setupEventListeners();
+        });
 
-            const toast = document.createElement('div');
-            const colorClass = type === 'crimson' ? 'bg-crimson text-parchment' : 'bg-acid text-noir';
-            toast.className = `${colorClass} font-mono text-xs font-bold px-4 py-2.5 rounded-lg shadow-xl toast-enter flex items-center space-x-2 border border-noir pointer-events-auto`;
-            toast.innerHTML = `<i class="fa-solid fa-circle-check"></i> <span>${message}</span>`;
+        // TOAST FEEDBACK
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-message');
+            if(!toast || !toastMsg) return;
+
+            toastMsg.innerText = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
             
-            container.appendChild(toast);
             setTimeout(() => {
-                toast.style.opacity = '0';
-                toast.style.transition = 'opacity 0.3s ease';
-                setTimeout(() => toast.remove(), 300);
+                toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
             }, 2500);
         }
 
-        // INITIALIZE APP ON DOM LOAD
-        document.addEventListener('DOMContentLoaded', () => {
-            renderTop4();
-            renderFeed();
-            renderShops();
-            switchGuide('singlestitch');
-            calculateFlip();
-            evaluateFad();
-            bindEvents();
-        });
+        // RENDER DAILY ARTICLES
+        function renderArticles() {
+            const grid = document.getElementById('articles-grid');
+            if(!grid) return;
 
-        // EVENT BINDINGS
-        function bindEvents() {
-            // Live Search
-            const searchInput = document.getElementById('feed-search');
-            if(searchInput) {
-                searchInput.addEventListener('input', () => renderFeed());
-            }
+            const filtered = DAILY_ARTICLES.filter(a => activeFilter === 'all' || a.category === activeFilter);
 
-            // Feed Category Tabs
-            document.querySelectorAll('.cat-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    currentFeedCat = e.currentTarget.dataset.cat;
-                    document.querySelectorAll('.cat-btn').forEach(b => {
-                        if(b.dataset.cat === currentFeedCat) {
-                            b.className = "cat-btn px-4 py-1.5 rounded-full border border-acid bg-acid text-noir font-bold transition-all whitespace-nowrap";
-                        } else {
-                            b.className = "cat-btn px-4 py-1.5 rounded-full border border-borderMuted bg-noir text-stone-300 hover:border-acid transition-all whitespace-nowrap";
-                        }
-                    });
-                    renderFeed();
-                });
-            });
-
-            // Calculator Inputs
-            const calcInputs = ['calc-buy', 'calc-resale', 'calc-platform', 'calc-shipping', 'calc-cleaning', 'calc-title'];
-            calcInputs.forEach(id => {
-                const el = document.getElementById(id);
-                if(el) {
-                    el.addEventListener('input', calculateFlip);
-                    el.addEventListener('change', calculateFlip);
-                }
-            });
-
-            // Calculator Presets
-            document.querySelectorAll('.calc-preset-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    const preset = e.currentTarget.dataset.preset;
-                    loadPreset(preset);
-                });
-            });
-
-            // Copy Summary Button
-            const copyBtn = document.getElementById('btn-copy-summary');
-            if(copyBtn) {
-                copyBtn.addEventListener('click', copyResaleSummary);
-            }
-
-            // Spotter Guide Tabs
-            document.querySelectorAll('.guide-tab-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    const key = e.currentTarget.dataset.guide;
-                    switchGuide(key);
-                });
-            });
-
-            // City Filter Buttons
-            document.querySelectorAll('.shop-city-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    currentShopCity = e.currentTarget.dataset.city;
-                    document.querySelectorAll('.shop-city-btn').forEach(b => {
-                        if(b.dataset.city === currentShopCity) {
-                            b.className = "shop-city-btn px-3 py-1.5 rounded bg-acid text-noir font-bold";
-                        } else {
-                            b.className = "shop-city-btn px-3 py-1.5 rounded bg-charcoal text-stone-300 hover:text-acid border border-borderMuted";
-                        }
-                    });
-                    renderShops();
-                });
-            });
-
-            // Fad Tester Live Changes
-            ['test-category', 'test-fabric', 'test-age', 'test-hype'].forEach(id => {
-                const el = document.getElementById(id);
-                if(el) {
-                    el.addEventListener('change', evaluateFad);
-                }
-            });
-
-            const btnDiagnostic = document.getElementById('btn-run-diagnostic');
-            if(btnDiagnostic) {
-                btnDiagnostic.addEventListener('click', () => {
-                    evaluateFad();
-                    showToast('Trend Diagnostic Calculated!');
-                });
-            }
-
-            // Modals Close Listeners
-            const btnCloseModal = document.getElementById('btn-close-modal');
-            if(btnCloseModal) btnCloseModal.addEventListener('click', closeModal);
-
-            const btnCloseShopModal = document.getElementById('btn-close-shop-modal');
-            if(btnCloseShopModal) btnCloseShopModal.addEventListener('click', closeShopModal);
-
-            const btnOpenShopModal = document.getElementById('btn-open-shop-modal');
-            if(btnOpenShopModal) btnOpenShopModal.addEventListener('click', openShopModal);
-
-            // Add Shop Form
-            const addShopForm = document.getElementById('add-shop-modal-form');
-            if(addShopForm) {
-                addShopForm.addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    addCustomShop();
-                });
-            }
-
-            // Backdrop Clicks
-            ['detail-modal', 'add-shop-modal'].forEach(modalId => {
-                const m = document.getElementById(modalId);
-                if(m) {
-                    m.addEventListener('click', (e) => {
-                        if(e.target === m) {
-                            m.classList.add('hidden');
-                        }
-                    });
-                }
-            });
-
-            // Escape Key
-            document.addEventListener('keydown', (e) => {
-                if(e.key === 'Escape') {
-                    closeModal();
-                    closeShopModal();
-                }
-            });
-        }
-
-        // RENDER TOP 4 FADS
-        function renderTop4() {
-            const container = document.getElementById('top4-container');
-            if(!container) return;
-
-            container.innerHTML = TOP_4_FADS.map(fad => `
-                <div class="bg-cardBg rounded-xl overflow-hidden border border-borderMuted hover:border-acid transition-all duration-300 flex flex-col group cursor-pointer" onclick="openModal('${fad.id}')">
-                    <div class="relative h-48 overflow-hidden bg-noir">
-                        <img src="${fad.image}" alt="${fad.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90">
-                        <span class="absolute top-3 left-3 bg-noir/90 text-acid text-[10px] font-mono px-2 py-0.5 rounded border border-acid/40 uppercase font-bold">
-                            ${fad.tag}
-                        </span>
-                        <span class="absolute bottom-3 right-3 bg-noir/90 text-parchment text-[11px] font-mono px-2 py-0.5 rounded border border-borderMuted">
-                            ${fad.era}
-                        </span>
+            grid.innerHTML = filtered.map(item => `
+                <div class="bg-cardBg p-6 rounded-xl border border-borderWarm hover:border-ink transition-all flex flex-col justify-between group">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between text-[11px] uppercase tracking-wider font-semibold">
+                            <span class="text-terracotta">${item.publisher}</span>
+                            <span class="text-inkLight">${item.date}</span>
+                        </div>
+                        <h3 class="font-serif text-lg font-bold text-ink group-hover:text-terracotta transition-colors leading-snug">
+                            <a href="${item.url}" target="_blank" rel="noopener noreferrer">${item.title}</a>
+                        </h3>
+                        <p class="text-inkMuted text-xs leading-relaxed">
+                            ${item.summary}
+                        </p>
                     </div>
-                    <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
-                        <div>
-                            <h3 class="font-serif text-lg font-bold text-parchment group-hover:text-acid transition-colors leading-snug">
-                                ${fad.title}
-                            </h3>
-                            <p class="text-xs text-stone-400 mt-2 font-mono line-clamp-2">
-                                ${fad.description}
-                            </p>
-                        </div>
-                        
-                        <div class="pt-3 border-t border-borderMuted/60 flex items-center justify-between font-mono text-xs">
-                            <div>
-                                <span class="text-stone-500 text-[10px] block">COMP RANGE</span>
-                                <span class="text-acid font-bold">${fad.priceRange}</span>
-                            </div>
-                            <button type="button" onclick="event.stopPropagation(); openModal('${fad.id}');" class="px-3 py-1.5 rounded bg-charcoal hover:bg-acid hover:text-noir text-stone-200 transition-colors border border-borderMuted">
-                                Inspect <i class="fa-solid fa-arrow-right text-[10px] ml-1"></i>
-                            </button>
-                        </div>
+
+                    <div class="pt-4 mt-4 border-t border-borderWarm/60 flex items-center justify-between text-xs font-semibold">
+                        <span class="text-inkLight uppercase text-[10px] tracking-wider">Publication Link</span>
+                        <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="text-ink hover:text-terracotta inline-flex items-center space-x-1">
+                            <span>Read Story</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                        </a>
                     </div>
                 </div>
             `).join('');
         }
 
-        // RENDER FEED GRID
-        function renderFeed() {
-            const grid = document.getElementById('feed-grid');
+        // RENDER NATIONAL CHAINS
+        function renderNationalChains() {
+            const grid = document.getElementById('national-chains-grid');
             if(!grid) return;
 
-            const searchVal = (document.getElementById('feed-search')?.value || '').toLowerCase();
-
-            const filtered = FEED_ITEMS.filter(item => {
-                const matchesCat = currentFeedCat === 'all' || item.category === currentFeedCat;
-                const matchesSearch = item.title.toLowerCase().includes(searchVal) || 
-                                      item.tag.toLowerCase().includes(searchVal) ||
-                                      item.era.toLowerCase().includes(searchVal) ||
-                                      item.notes.toLowerCase().includes(searchVal);
-                return matchesCat && matchesSearch;
-            });
-
-            if(filtered.length === 0) {
-                grid.innerHTML = `
-                    <div class="col-span-full py-12 text-center font-mono text-stone-500 border border-dashed border-borderMuted rounded-xl">
-                        <i class="fa-solid fa-box-open text-2xl mb-2 text-stone-600"></i>
-                        <p>No vintage finds matching your search filter.</p>
+            grid.innerHTML = NATIONAL_CHAINS.map(chain => `
+                <a href="${chain.url}" target="_blank" rel="noopener noreferrer" class="bg-stoneBg p-4 rounded-xl border border-borderWarm hover:border-ink transition-all block group">
+                    <div class="flex items-center space-x-2 text-ink font-serif font-bold text-sm mb-1 group-hover:text-terracotta">
+                        <i class="fa-solid ${chain.icon} text-terracotta text-xs"></i>
+                        <span>${chain.name}</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-[9px] text-inkLight ml-auto"></i>
                     </div>
-                `;
+                    <p class="text-inkMuted text-[11px] font-sans leading-normal">${chain.desc}</p>
+                </a>
+            `).join('');
+        }
+
+        // RENDER DIRECTORY COLUMNS
+        function renderDirectory() {
+            const pubCol = document.getElementById('pub-column');
+            const discCol = document.getElementById('discount-column');
+
+            if(pubCol) {
+                pubCol.innerHTML = PUBLICATIONS.map(p => `
+                    <div class="p-3.5 rounded-lg bg-stoneBg border border-borderWarm/70 hover:border-ink transition-colors flex items-start justify-between">
+                        <div>
+                            <a href="${p.url}" target="_blank" rel="noopener noreferrer" class="font-semibold text-xs text-ink hover:text-terracotta inline-flex items-center space-x-1">
+                                <span>${p.name}</span>
+                                <i class="fa-solid fa-arrow-up-right-from-square text-[9px] text-inkLight"></i>
+                            </a>
+                            <p class="text-inkMuted text-[11px] mt-0.5">${p.desc}</p>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            if(discCol) {
+                discCol.innerHTML = DISCOUNT_PLATFORMS.map(d => `
+                    <div class="p-3.5 rounded-lg bg-stoneBg border border-borderWarm/70 hover:border-ink transition-colors flex items-start justify-between">
+                        <div>
+                            <a href="${d.url}" target="_blank" rel="noopener noreferrer" class="font-semibold text-xs text-ink hover:text-terracotta inline-flex items-center space-x-1">
+                                <span>${d.name}</span>
+                                <i class="fa-solid fa-arrow-up-right-from-square text-[9px] text-inkLight"></i>
+                            </a>
+                            <p class="text-inkMuted text-[11px] mt-0.5">${d.desc}</p>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // RENDER SAVED SPOTS FROM LOCALSTORAGE
+        function renderSavedSpots() {
+            const list = document.getElementById('saved-spots-list');
+            if(!list) return;
+
+            const spots = JSON.parse(localStorage.getItem('fad4_saved_spots') || '[]');
+
+            if(spots.length === 0) {
+                list.innerHTML = `<p class="text-inkLight text-xs italic col-span-full">No personal local thrift spots saved yet. Click "Add Local Spot" to save your favorite store!</p>`;
                 return;
             }
 
-            grid.innerHTML = filtered.map(item => `
-                <div class="bg-noir p-5 rounded-xl border border-borderMuted hover:border-acid transition-all duration-300 font-mono text-xs flex flex-col justify-between cursor-pointer group" onclick="openModal('${item.id}')">
+            list.innerHTML = spots.map((s, idx) => `
+                <div class="p-3 bg-stoneBg rounded-lg border border-borderWarm flex items-center justify-between text-xs">
                     <div>
-                        <div class="flex items-center justify-between mb-3">
-                            <span class="px-2 py-0.5 rounded bg-charcoal text-acid border border-borderMuted text-[10px] uppercase font-bold">
-                                ${item.category.toUpperCase()}
-                            </span>
-                            <span class="text-stone-500 text-[11px]">${item.era}</span>
-                        </div>
-                        <h4 class="font-serif text-base font-bold text-parchment mb-2 group-hover:text-acid transition-colors">${item.title}</h4>
-                        <p class="text-stone-400 text-[11px] mb-4 font-sans leading-relaxed">${item.notes}</p>
+                        <strong class="text-ink block font-semibold">${s.name}</strong>
+                        <span class="text-inkMuted text-[11px]">${s.city}</span>
                     </div>
-
-                    <div class="pt-3 border-t border-borderMuted/60 flex items-center justify-between">
-                        <div>
-                            <span class="text-stone-500 text-[10px] block">EST. RESALE</span>
-                            <span class="text-parchment font-bold">${item.price}</span>
-                        </div>
-                        <div class="text-right">
-                            <span class="text-stone-500 text-[10px] block">THRIFT TARGET</span>
-                            <span class="text-acid font-bold">${item.buyEst}</span>
-                        </div>
+                    <div class="flex items-center space-x-2">
+                        ${s.url ? `<a href="${s.url}" target="_blank" rel="noopener noreferrer" class="text-terracotta hover:underline text-[11px]"><i class="fa-solid fa-globe"></i> Link</a>` : ''}
+                        <button type="button" onclick="deleteSavedSpot(${idx})" class="text-inkLight hover:text-red-600 text-xs px-1">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
                     </div>
                 </div>
             `).join('');
         }
 
-        // RENDER SHOPS DIRECTORY
-        function renderShops() {
-            const grid = document.getElementById('shops-grid');
-            if(!grid) return;
-
-            const localShops = JSON.parse(localStorage.getItem('fad4_custom_shops') || '[]');
-            const allShops = [...INITIAL_SHOPS, ...localShops];
-
-            const filtered = allShops.filter(s => currentShopCity === 'all' || s.city.toLowerCase().includes(currentShopCity.toLowerCase()));
-
-            grid.innerHTML = filtered.map(shop => {
-                const siteBtn = shop.website 
-                    ? `<a href="${shop.website}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation();" class="text-acid hover:underline inline-flex items-center space-x-1">
-                        <span>Visit Site</span>
-                        <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
-                       </a>`
-                    : `<span class="text-stone-500">No Web Link</span>`;
-
-                return `
-                    <div class="bg-cardBg p-5 rounded-xl border border-borderMuted hover:border-amber-400 transition-all font-mono text-xs flex flex-col justify-between">
-                        <div>
-                            <div class="flex items-center justify-between mb-2">
-                                <span class="px-2 py-0.5 rounded bg-amber-400/10 text-amber-400 border border-amber-400/30 text-[10px] font-bold">
-                                    ${shop.city}
-                                </span>
-                                <span class="text-stone-400 text-[11px]">${shop.priceScale}</span>
-                            </div>
-                            <h4 class="font-serif text-lg font-bold text-parchment mb-1">${shop.name}</h4>
-                            <div class="text-stone-500 text-[11px] mb-3"><i class="fa-solid fa-location-dot mr-1"></i> ${shop.address}</div>
-                            <p class="text-stone-300 font-sans text-xs">${shop.specialty}</p>
-                        </div>
-                        <div class="mt-4 pt-3 border-t border-borderMuted/60 flex items-center justify-between text-stone-400 text-[11px]">
-                            ${siteBtn}
-                            <span class="text-acid"><i class="fa-solid fa-star text-[10px]"></i> ${shop.rating || '4.8'}</span>
-                        </div>
-                    </div>
-                `;
-            }).join('');
+        function deleteSavedSpot(idx) {
+            const spots = JSON.parse(localStorage.getItem('fad4_saved_spots') || '[]');
+            spots.splice(idx, 1);
+            localStorage.setItem('fad4_saved_spots', JSON.stringify(spots));
+            renderSavedSpots();
+            showToast('Store removed');
         }
 
-        function openShopModal() {
-            document.getElementById('add-shop-modal')?.classList.remove('hidden');
-        }
-
-        function closeShopModal() {
-            document.getElementById('add-shop-modal')?.classList.add('hidden');
-        }
-
-        function addCustomShop() {
-            const name = document.getElementById('modal-shop-name').value;
-            const city = document.getElementById('modal-shop-city').value;
-            const price = document.getElementById('modal-shop-price').value;
-            const url = document.getElementById('modal-shop-url').value;
-            const specialty = document.getElementById('modal-shop-specialty').value;
-
-            if(!name || !city || !specialty) return;
-
-            const newShop = {
-                id: 'custom_' + Date.now(),
-                name: name,
-                city: city,
-                address: city + ' Spot',
-                specialty: specialty,
-                priceScale: price,
-                website: url || null,
-                rating: '5.0'
-            };
-
-            const existing = JSON.parse(localStorage.getItem('fad4_custom_shops') || '[]');
-            existing.push(newShop);
-            localStorage.setItem('fad4_custom_shops', JSON.stringify(existing));
-
-            document.getElementById('add-shop-modal-form').reset();
-            closeShopModal();
-            renderShops();
-            showToast(`Added "${name}" to shop directory!`);
-        }
-
-        // THRIFT FLIP CALCULATOR LOGIC
-        function calculateFlip() {
-            const buyCost = parseFloat(document.getElementById('calc-buy')?.value) || 0;
-            const resalePrice = parseFloat(document.getElementById('calc-resale')?.value) || 0;
-            const platformFeePct = parseFloat(document.getElementById('calc-platform')?.value) || 0;
-            const shippingCost = parseFloat(document.getElementById('calc-shipping')?.value) || 0;
-            const cleaningCost = parseFloat(document.getElementById('calc-cleaning')?.value) || 0;
-
-            const feeCost = resalePrice * (platformFeePct / 100);
-            const totalCost = buyCost + feeCost + shippingCost + cleaningCost;
-            const netProfit = resalePrice - totalCost;
-            const margin = resalePrice > 0 ? (netProfit / resalePrice) * 100 : 0;
-            const roi = buyCost > 0 ? (netProfit / buyCost) * 100 : 0;
-
-            // DOM Updates
-            const elNet = document.getElementById('res-net-profit');
-            const elGross = document.getElementById('res-gross');
-            const elBuy = document.getElementById('res-buy-cost');
-            const elFee = document.getElementById('res-fee-cost');
-            const elShip = document.getElementById('res-ship-cost');
-            const elRoi = document.getElementById('res-roi');
-            const elMargin = document.getElementById('res-margin');
-
-            if(elNet) elNet.innerText = `$${netProfit.toFixed(2)}`;
-            if(elGross) elGross.innerText = `$${resalePrice.toFixed(2)}`;
-            if(elBuy) elBuy.innerText = `-$${buyCost.toFixed(2)}`;
-            if(elFee) elFee.innerText = `-$${feeCost.toFixed(2)}`;
-            if(elShip) elShip.innerText = `-$${(shippingCost + cleaningCost).toFixed(2)}`;
-            if(elRoi) elRoi.innerText = `${roi.toFixed(0)}%`;
-            if(elMargin) elMargin.innerText = `${margin.toFixed(1)}%`;
-
-            // Rating Banner
-            const ratingBox = document.getElementById('res-rating-box');
-            const ratingTitle = document.getElementById('res-rating-title');
-            const ratingDesc = document.getElementById('res-rating-desc');
-
-            if(ratingBox && ratingTitle && ratingDesc) {
-                if(netProfit >= 40 && roi >= 200) {
-                    ratingBox.className = "p-3 rounded border font-mono text-xs flex items-center space-x-3 bg-acid/10 border-acid text-acid";
-                    ratingTitle.innerText = "HIGH MARGIN GRAIL FLIP";
-                    ratingDesc.innerText = "Exceptional ROI. Grab this immediately at the thrift!";
-                } else if(netProfit > 15 && netProfit < 40) {
-                    ratingBox.className = "p-3 rounded border font-mono text-xs flex items-center space-x-3 bg-blue-400/10 border-blue-400 text-blue-400";
-                    ratingTitle.innerText = "SOLID BREAD & BUTTER FLIP";
-                    ratingDesc.innerText = "Steady item for ongoing inventory rotation.";
-                } else if(netProfit > 0) {
-                    ratingBox.className = "p-3 rounded border font-mono text-xs flex items-center space-x-3 bg-amber-400/10 border-amber-400 text-amber-400";
-                    ratingTitle.innerText = "THIN MARGIN / RISKY";
-                    ratingDesc.innerText = "Marginal profit. Unexpected shipping spikes can erase gains.";
-                } else {
-                    ratingBox.className = "p-3 rounded border font-mono text-xs flex items-center space-x-3 bg-crimson/10 border-crimson text-crimson";
-                    ratingTitle.innerText = "UNPROFITABLE FLIP";
-                    ratingDesc.innerText = "Negative return after platform fees and expenses. Pass.";
-                }
-            }
-        }
-
-        function loadPreset(presetType) {
-            const titleInput = document.getElementById('calc-title');
-            const buyInput = document.getElementById('calc-buy');
-            const resaleInput = document.getElementById('calc-resale');
-            const platformInput = document.getElementById('calc-platform');
-            const shipInput = document.getElementById('calc-shipping');
-            const cleanInput = document.getElementById('calc-cleaning');
-
-            if(presetType === 'bandTee') {
-                if(titleInput) titleInput.value = "90s Metallica Giant Tag Tee";
-                if(buyInput) buyInput.value = "7.50";
-                if(resaleInput) resaleInput.value = "140.00";
-                if(platformInput) platformInput.value = "13.25";
-                if(shipInput) shipInput.value = "5.50";
-                if(cleanInput) cleanInput.value = "2.00";
-            } else if(presetType === 'jacket') {
-                if(titleInput) titleInput.value = "Carhartt J97 Detroit Jacket";
-                if(buyInput) buyInput.value = "18.00";
-                if(resaleInput) resaleInput.value = "195.00";
-                if(platformInput) platformInput.value = "13.25";
-                if(shipInput) shipInput.value = "12.00";
-                if(cleanInput) cleanInput.value = "4.00";
-            } else if(presetType === 'trench') {
-                if(titleInput) titleInput.value = "Vintage Leather Matrix Trench";
-                if(buyInput) buyInput.value = "14.00";
-                if(resaleInput) resaleInput.value = "110.00";
-                if(platformInput) platformInput.value = "20.0";
-                if(shipInput) shipInput.value = "14.00";
-                if(cleanInput) cleanInput.value = "5.00";
-            } else if(presetType === 'sweatshirt') {
-                if(titleInput) titleInput.value = "80s Sun-Faded Reverse Weave Hoodie";
-                if(buyInput) buyInput.value = "9.00";
-                if(resaleInput) resaleInput.value = "88.00";
-                if(platformInput) platformInput.value = "13.25";
-                if(shipInput) shipInput.value = "8.00";
-                if(cleanInput) cleanInput.value = "2.50";
-            }
-            calculateFlip();
-            showToast(`Loaded "${presetType}" Preset`);
-        }
-
-        function copyResaleSummary() {
-            const title = document.getElementById('calc-title')?.value || 'Item';
-            const profit = document.getElementById('res-net-profit')?.innerText || '$0';
-            const roi = document.getElementById('res-roi')?.innerText || '0%';
-            const text = `FAD4.COM Flip Analysis: "${title}" | Est. Net Profit: ${profit} (ROI: ${roi})`;
-
-            const tempInput = document.createElement("input");
-            tempInput.value = text;
-            document.body.appendChild(tempInput);
-            tempInput.select();
-            document.execCommand("copy");
-            document.body.removeChild(tempInput);
-
-            showToast("Flip summary copied to clipboard!");
-        }
-
-        // VINTAGE SPOTTER GUIDE TAB SWITCHER
-        function switchGuide(tabKey) {
-            document.querySelectorAll('.guide-tab-btn').forEach(btn => {
-                if(btn.dataset.guide === tabKey) {
-                    btn.className = "guide-tab-btn p-4 rounded-xl border border-acid bg-acid text-noir font-bold text-left transition-all";
-                } else {
-                    btn.className = "guide-tab-btn p-4 rounded-xl border border-borderMuted bg-noir text-stone-300 hover:border-acid font-bold text-left transition-all";
-                }
+        // EVENT LISTENERS SETUP
+        function setupEventListeners() {
+            // Category filter buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    activeFilter = e.currentTarget.dataset.cat;
+                    document.querySelectorAll('.filter-btn').forEach(b => {
+                        if(b.dataset.cat === activeFilter) {
+                            b.className = "filter-btn px-3 py-1.5 rounded-full bg-ink text-stoneBg transition-all";
+                        } else {
+                            b.className = "filter-btn px-3 py-1.5 rounded-full bg-white text-inkMuted border border-borderWarm hover:border-ink transition-all";
+                        }
+                    });
+                    renderArticles();
+                });
             });
-            const contentBox = document.getElementById('guide-content');
-            if(contentBox && GUIDES[tabKey]) {
-                contentBox.innerHTML = GUIDES[tabKey];
+
+            // Store Locator Form
+            const locatorForm = document.getElementById('locator-form');
+            if(locatorForm) {
+                locatorForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const query = document.getElementById('locator-input').value.trim();
+                    if(!query) return;
+
+                    const resultsBox = document.getElementById('locator-results');
+                    const termDisplay = document.getElementById('search-term-display');
+                    const linkGoodwill = document.getElementById('link-goodwill');
+                    const linkGmaps = document.getElementById('link-gmaps');
+                    const linkSalvation = document.getElementById('link-salvation');
+
+                    termDisplay.innerText = query;
+
+                    // Update direct URLs
+                    linkGoodwill.href = `https://www.goodwill.org/locator/?address=${encodeURIComponent(query)}`;
+                    linkGmaps.href = `https://www.google.com/maps/search/thrift+store+goodwill+near+${encodeURIComponent(query)}`;
+                    linkSalvation.href = `https://satruck.org/search?zip=${encodeURIComponent(query)}`;
+
+                    resultsBox.classList.remove('hidden');
+                    showToast(`Generated thrift locator links for ${query}`);
+                });
             }
-        }
 
-        // FAD OR FOREVER EVALUATOR
-        function evaluateFad() {
-            const cat = document.getElementById('test-category')?.value || 'tee';
-            const fabric = document.getElementById('test-fabric')?.value || 'singlestitch';
-            const age = parseInt(document.getElementById('test-age')?.value || '20');
-            const hype = document.getElementById('test-hype')?.value || 'organic';
-            const resultBox = document.getElementById('fad-test-result');
-            
-            if(!resultBox) return;
+            // Toggle Add Form
+            const toggleBtn = document.getElementById('toggle-add-form');
+            const addForm = document.getElementById('add-spot-form');
+            const cancelBtn = document.getElementById('btn-cancel-spot');
 
-            let score = 50;
-
-            if(cat === 'tee' || cat === 'workwear') score += 25;
-            if(cat === 'leather') score += 15;
-            if(cat === 'fastfashion') score -= 35;
-
-            if(fabric === 'singlestitch') score += 25;
-            if(fabric === 'heavy') score += 15;
-            if(fabric === 'blend') score -= 25;
-
-            if(age >= 20) score += 15;
-            if(hype === 'organic') score += 10;
-            if(hype === 'fading') score -= 20;
-
-            score = Math.max(10, Math.min(99, score));
-
-            if(score >= 80) {
-                resultBox.innerHTML = `
-                    <div class="flex items-center justify-between pb-1 border-b border-borderMuted">
-                        <span class="text-acid font-bold"><i class="fa-solid fa-gem mr-1"></i> TIMELESS FOREVER GRAIL</span>
-                        <span class="text-acid font-bold text-base">${score}/100</span>
-                    </div>
-                    <div class="text-stone-300 text-[11px] mt-1">High historical value + durable materials. Keeps or appreciates in market value over decades.</div>
-                `;
-            } else if(score >= 50) {
-                resultBox.innerHTML = `
-                    <div class="flex items-center justify-between pb-1 border-b border-borderMuted">
-                        <span class="text-amber-400 font-bold"><i class="fa-solid fa-scale-balanced mr-1"></i> SOLID SEASONAL TREND</span>
-                        <span class="text-amber-400 font-bold text-base">${score}/100</span>
-                    </div>
-                    <div class="text-stone-300 text-[11px] mt-1">Good current resale demand. Flip within 30 to 90 days while aesthetic wave is active.</div>
-                `;
-            } else {
-                resultBox.innerHTML = `
-                    <div class="flex items-center justify-between pb-1 border-b border-borderMuted">
-                        <span class="text-crimson font-bold"><i class="fa-solid fa-triangle-exclamation mr-1"></i> PASSING MICRO-FAD</span>
-                        <span class="text-crimson font-bold text-base">${score}/100</span>
-                    </div>
-                    <div class="text-stone-300 text-[11px] mt-1">High depreciation risk. Fast fashion micro-trends drop over 80% in resale value once social interest shifts.</div>
-                `;
+            if(toggleBtn && addForm) {
+                toggleBtn.addEventListener('click', () => {
+                    addForm.classList.toggle('hidden');
+                });
             }
-        }
 
-        // MODAL DRAWER FUNCTIONS
-        function openModal(id) {
-            const item = TOP_4_FADS.find(x => x.id === id) || FEED_ITEMS.find(x => x.id === id);
-            if(!item) return;
+            if(cancelBtn && addForm) {
+                cancelBtn.addEventListener('click', () => {
+                    addForm.classList.add('hidden');
+                });
+            }
 
-            const modalBody = document.getElementById('modal-body');
-            if(!modalBody) return;
+            // Submit Add Spot Form
+            if(addForm) {
+                addForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const name = document.getElementById('spot-name').value.trim();
+                    const city = document.getElementById('spot-city').value.trim();
+                    const url = document.getElementById('spot-url').value.trim();
 
-            modalBody.innerHTML = `
-                <div class="font-mono text-xs">
-                    <span class="px-2 py-0.5 rounded bg-acid text-noir font-bold uppercase">${item.tag || 'TREND INSPECTION'}</span>
-                    <h2 class="font-serif text-2xl sm:text-3xl font-extrabold text-parchment mt-2 mb-1">${item.title}</h2>
-                    <div class="text-stone-400 mb-4">${item.era} &bull; Est. Resale Target: <span class="text-acid font-bold">${item.priceRange || item.price}</span></div>
-                    
-                    <img src="${item.image}" alt="${item.title}" class="w-full h-56 object-cover rounded-xl border border-borderMuted mb-4">
+                    if(!name || !city) return;
 
-                    <div class="space-y-3">
-                        <div>
-                            <h4 class="font-bold text-parchment text-sm mb-1">Market Overview & Demand</h4>
-                            <p class="text-stone-300 text-xs font-sans leading-relaxed">${item.description || item.notes}</p>
-                        </div>
+                    const spots = JSON.parse(localStorage.getItem('fad4_saved_spots') || '[]');
+                    spots.push({ name, city, url: url || null });
+                    localStorage.setItem('fad4_saved_spots', JSON.stringify(spots));
 
-                        <div class="p-3 bg-noir rounded border border-borderMuted">
-                            <h4 class="font-bold text-acid mb-0.5"><i class="fa-solid fa-tag mr-1"></i> Target Brand Tags to Look For</h4>
-                            <p class="text-stone-300 text-xs">${item.targetTags || 'Check collar tag and care label inside hip.'}</p>
-                        </div>
-
-                        <div class="p-3 bg-noir rounded border border-borderMuted">
-                            <h4 class="font-bold text-amber-400 mb-0.5"><i class="fa-solid fa-eye mr-1"></i> Thrift Spotter Secret</h4>
-                            <p class="text-stone-300 text-xs">${item.thriftTip || 'Examine armpit seams for single stitch and check screenprint texture.'}</p>
-                        </div>
-
-                        <div class="pt-3 border-t border-borderMuted flex items-center justify-between text-xs">
-                            <span class="text-stone-400">Target Thrift Buy Cost:</span>
-                            <span class="text-acid font-bold">${item.buyEst || '$5 - $15'}</span>
-                        </div>
-                    </div>
-                </div>
-            `;
-            document.getElementById('detail-modal')?.classList.remove('hidden');
-        }
-
-        function closeModal() {
-            document.getElementById('detail-modal')?.classList.add('hidden');
+                    addForm.reset();
+                    addForm.classList.add('hidden');
+                    renderSavedSpots();
+                    showToast(`Saved "${name}" to your spots`);
+                });
+            }
         }
     </script>
 </body>
